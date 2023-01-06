@@ -1,0 +1,226 @@
+hr.style-five {
+    border: 0;
+    height: 0; /* Firefox... */
+    box-shadow: 0 0 10px 1px black;
+}
+hr.style-five:after {
+    /* Not really supposed to work, but does */
+    content: "\00a0"; /* Prevent margin collapse */
+}
+
+#slider {
+    background: url("./img/cover.jpeg") top center / cover no-repeat;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.content-slider {
+    text-align: center;
+    padding-top: 150px;
+}
+
+.title {
+    color: #ffffff;
+    font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+}
+
+.file-upload {
+    background: rgba(17, 25, 54, 0.9);
+    border-radius: 10px;
+    width: 50%;
+    margin: auto;
+    padding: 20px 70px;
+    box-sizing: border-box;
+}
+.file-upload-btn {
+    width: 100%;
+    margin: 0;
+    color: #fff;
+    background: #1fb264;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    border-bottom: 4px solid #15824b;
+    transition: all 0.2s ease;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.file-upload-btn:hover {
+    background: #1aa059;
+    color: #ffffff;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.file-upload-btn:active {
+    border: 0;
+    transition: all 0.2s ease;
+}
+.file-upload-content {
+    display: none;
+    text-align: center;
+}
+.file-upload-input {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    opacity: 0;
+    cursor: pointer;
+    right: 0px;
+}
+.image-upload-wrap {
+    margin-top: 20px;
+    border: 2px dashed rgba(11, 18, 44, 0.9);
+    position: relative;
+    background-color: #fff;
+    border-radius: 10px;
+}
+.image-dropping,
+.image-upload-wrap:hover {
+    background-color: #1fb264;
+    border: 2px dashed #ffffff;
+}
+.image-title-wrap {
+    padding: 0 15px 15px 15px;
+    color: #222;
+}
+.drag-text {
+    text-align: center;
+}
+.drag-text h3 {
+    font-weight: 100;
+    /* text-transform: uppercase; */
+    color: #555;
+    padding: 60px 0;
+}
+.file-upload-image {
+    max-height: 200px;
+    max-width: 200px;
+    margin: auto;
+    padding: 20px;
+}
+.remove-image {
+    width: 30%;
+    margin: 0;
+    color: #fff;
+    background: #cd4535;
+    border: none;
+    border-radius: 4px;
+    border-bottom: 4px solid #b02818;
+    transition: all 0.2s ease;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.remove-image:hover {
+    background: #c13b2a;
+    color: #ffffff;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.remove-image:active {
+    border: 0;
+    transition: all 0.2s ease;
+}
+
+.total-items {
+    padding-left: -5px;
+    padding-right: -5px;
+}
+
+.item-product {
+    float: left; 
+    padding: 5px 5px 5px 5px; 
+    width: 20%;
+    border-radius: 5px;
+    background-color: #fff;
+    background-clip: content-box;
+    transition: all 0.2s linear;
+}
+
+.item-product:hover {
+    box-shadow: 0 0.0625rem 20px 0 rgb(0 0 0 / 5%);
+    transform: translateY(-.0625rem);
+    z-index: 1;
+    background-color: rgba(76, 175, 80, 0.2);
+}
+.item-image {
+    width: 100%;
+}
+
+.name-item {
+    text-align: center; 
+    font-weight: bold;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    color: #054f9f;
+}
+
+.price-item {
+    text-align: center; 
+    color: #ee4d2d;
+}
+
+.quantity-item {
+    margin-left: 10px;
+    margin-bottom: 30px;
+}
+
+.sort-item {
+    float: right;
+    margin-right: 10px;
+}
+
+.btn-search {
+    padding: 15px 30px 15px 30px;
+    margin: 30px 0px;
+    width: 80%;
+    border-radius: 10px;
+    background-color: #00ad5f;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.btn-search:hover {
+    background: #00994b;
+}
+.image-query {
+    width: 30%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#query {
+    padding-top: 20px;
+}
+
+.image-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+
+#item-result {
+    display: block;
+    margin-top: 20px;
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+.footer {
+    height: 100px;
+    width: 100%;
+}
