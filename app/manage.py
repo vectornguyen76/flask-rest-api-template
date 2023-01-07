@@ -2,11 +2,13 @@ import os
 from flask_script import Manager
 from main import create_app
 from __init__ import api_blueprint
+from flask_smorest import Api
 
 app = create_app()
 
 # Register main Blueprint
-app.register_blueprint(api_blueprint)
+api = Api(app)
+api.register_blueprint(api_blueprint)
 
 # Set up
 # app.app_context().push()

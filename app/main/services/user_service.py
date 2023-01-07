@@ -1,24 +1,66 @@
-from main.models.user_model import UserModel, users_schema, db
+from main.models.models import db
+from main.models.user_model import UserModel
+from main.models.blocklist_model import BlocklistModel
 from datetime import datetime
-from flask_restful import reqparse
 from passlib.hash import pbkdf2_sha256
 from sqlalchemy import desc, asc
+from flask_jwt_extended import create_access_token, create_refresh_token
+from flask_smorest import abort
 
-user_args = reqparse.RequestParser()
-user_args.add_argument("username", type=str, required=True)
-user_args.add_argument("password", type=str, required=True)
-user_args.add_argument("time_created", type=str, required=False)
-
-def get_user():
+def get_all_user():
     results = UserModel.query.order_by(asc(UserModel.id)).all()
-    output = users_schema.dump(results)
+    return results
 
-    return output, 200
+def get_user(user_id):
+    results = UserModel.query.filter_by(id=user_id).first()
+    return results
 
-def put_user():
-    args = user_args.parse_args()
-    username = args['username']
-    password = args['password']
+def update_user(user_data, user_id):
+    result = UserModel.query.filter_by(id=user_id).first()
+    if not result:
+        abort(400, message="User doesn't exist, cannot update!")
+
+    try:
+        if user_data['username']:
+            result.username = user_data['username']
+            
+        if user_data['password']:
+            # Hash password
+            password = pbkdf2_sha256.hash(user_data['password'])
+            result.password = password
+            
+        if user_data['time_created']:
+            result.time_created = user_data['time_created']
+            
+        db.session.commit()
+    except:
+        db.session.rollback()
+        abort(400, message="Can not update!")
+
+    return {"message": "Update successfully!"}
+
+def delete_user(id):
+    result = UserModel.query.filter_by(id=id).delete()
+    if not result:
+        abort(400, message="User doesn't exist, cannot delete!")
+    
+    db.session.commit()
+    return {"message": "Delete successfully!"}
+
+def login_user(user_data):
+    user = UserModel.query.filter(UserModel.username == user_data['username']).first()
+    
+    # Verify
+    if user and pbkdf2_sha256.verify(user_data['password'], user.password):
+        access_token = create_access_token(identity=user.id, fresh=True)
+        refresh_token = create_refresh_token(identity=user.id)
+        return {"access_token": access_token, "refresh_token": refresh_token}
+
+    abort(401, message="Invalid credentials.")
+
+def register_user(user_data):
+    username = user_data['username']
+    password = user_data['password']
     time_created = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
     # Hash password
@@ -31,39 +73,15 @@ def put_user():
         db.session.commit()
     except:
         db.session.rollback()
-        return {"message": "Bad request!"}, 400
+        abort(400, message="Can not register!")
     
-    return {"message": "Add successfully!"}, 200
+    return {"message": "Add successfully!"}
 
-def patch_user(id):
-    args = user_args.parse_args()
-    result = UserModel.query.filter_by(id=id).first()
-    if not result:
-        return {"message": "User doesn't exist, cannot update!"}, 404
-
+def add_jti_blocklist(jti):
+    new_row = BlocklistModel(jti_blocklist = str(jti))
     try:
-        if args['username']:
-            result.username = args['username']
-            
-        if args['password']:
-            # Hash password
-            password = pbkdf2_sha256.hash(args['password'])
-            result.password = password
-            
-        if args['time_created']:
-            result.time_created = args['time_created']
-            
+        db.session.add(new_row)
         db.session.commit()
     except:
         db.session.rollback()
-        return {"message": "Can not update!"}, 400
-
-    return {"message": "Update successfully!"}, 200
-
-def del_user(id):
-    result = UserModel.query.filter_by(id=id).delete()
-    if not result:
-        return {"message": "User doesn't exist, cannot delete!"}, 404
-    
-    db.session.commit()
-    return {"message": "Delete successfully!"}, 200
+        abort(400, message="Can not add jti!")
