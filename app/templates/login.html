@@ -28,7 +28,7 @@
           <div>
             <a
               type="submit"
-              onclick="check()"
+              onclick="post_login()"
               id="submit"
               class="btn_submit"
               href="#"
@@ -39,7 +39,7 @@
               <span></span>
               Đăng nhập
             </a>
-            <a id="btn_register" onclick="demo()" class="btn_register" href="register">
+            <a id="btn_register" onclick="" class="btn_register" href="register">
               <span></span>
               <span></span>
               <span></span>
@@ -50,55 +50,6 @@
         </div>
       </form>
     </div>
-
-    <script>
-      function demo() {
-        console.log(Math.random());
-      }
-
-      function check() {
-        $.get("/api/account", function (data) {
-          var user = [];
-          var pass = [];
-          var state = 0;
-
-          for (var i in data) {
-            user.push(data[i].username);
-            pass.push(data[i].password);
-
-            if (
-              document.getElementById("username").value == user[i] &&
-              document.getElementById("password").value == pass[i]
-            ) {
-              state = 1;
-              console.log("success");
-              break;
-            }
-          }
-          if (state == 1) {
-            //document.getElementById("submit").href = "index.html";
-            window.location.href = "/";
-            return false;
-          } else {
-            document.getElementById("notify").innerHTML =
-              "Tên đăng nhập hoặc mật khẩu không chính xác.";
-          }
-        });
-      }
-      var input = document.getElementById("password");
-      input.addEventListener("keyup", function (event) {
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          document.getElementById("submit").click();
-        }
-      });
-      var input2 = document.getElementById("username");
-      input2.addEventListener("keyup", function (event) {
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          document.getElementById("submit").click();
-        }
-      });
-    </script>
+    <script src="./js/login.js"></script>
   </body>
 </html>
