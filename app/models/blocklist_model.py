@@ -1,4 +1,4 @@
-from .models import db
+from db import db
 
 class BlocklistModel(db.Model):
     __tablename__ = "blocklist"

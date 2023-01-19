@@ -1,9 +1,9 @@
-from main.models.models import db
-from main.models.user_model import UserModel
-from main.models.blocklist_model import BlocklistModel
+from db import db
+from models.user_model import UserModel
+from models.blocklist_model import BlocklistModel
 from datetime import datetime
 from passlib.hash import pbkdf2_sha256
-from sqlalchemy import desc, asc
+from sqlalchemy import asc
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_smorest import abort
 
@@ -48,12 +48,17 @@ def delete_user(id):
     return {"message": "Delete successfully!"}
 
 def login_user(user_data):
+    # Check user name
     user = UserModel.query.filter(UserModel.username == user_data['username']).first()
     
     # Verify
     if user and pbkdf2_sha256.verify(user_data['password'], user.password):
+        # Create access_token
         access_token = create_access_token(identity=user.id, fresh=True)
+        
+        # Create refresh_token
         refresh_token = create_refresh_token(identity=user.id)
+        
         return {"access_token": access_token, "refresh_token": refresh_token}
 
     abort(401, message="Invalid credentials.")
@@ -62,6 +67,11 @@ def register_user(user_data):
     username = user_data['username']
     password = user_data['password']
     time_created = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    # Check user name exist
+    user = UserModel.query.filter(UserModel.username == user_data['username']).first()
+    if user:
+        abort(400, message="Username already exists.")
     
     # Hash password
     password = pbkdf2_sha256.hash(password)
@@ -78,7 +88,9 @@ def register_user(user_data):
     return {"message": "Add successfully!"}
 
 def add_jti_blocklist(jti):
+    # Add to blockist when remove jti
     new_row = BlocklistModel(jti_blocklist = str(jti))
+    
     try:
         db.session.add(new_row)
         db.session.commit()

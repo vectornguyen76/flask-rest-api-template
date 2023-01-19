@@ -1,21 +1,30 @@
-from flask import Flask, jsonify, request, render_template, flash
-import json
-from dataclasses import dataclass
-from datetime import datetime
+from flask import Flask, jsonify
 from flask_jwt_extended import JWTManager 
-import secrets
-from passlib.hash import pbkdf2_sha256
-from main.config import Config
-from main.models.models import db
-from main.models.blocklist_model import BlocklistModel 
+from config import Config
+from db import db
+from models.blocklist_model import BlocklistModel 
+from blueprint import register_routing
+from flask_cors import CORS
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 
 # Config
 app.config.from_object(Config)
 
+# CORS - manage resource
+CORS(app, resources={
+    r"/": { "origins": "*" }
+})
+
 # Connect with db
 db.init_app(app)
+
+# Migrate db
+migrate = Migrate(app, db)
+
+# Register Blueprint
+register_routing(app)
 
 # Config JWT
 jwt = JWTManager(app)

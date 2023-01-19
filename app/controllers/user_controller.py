@@ -1,11 +1,9 @@
-from main.services import user_service
+from services import user_service
 from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity, create_access_token
-from flask import Response, render_template
-
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 
-from main.models.user_model import UserSchema, UserUpdateSchema
+from schemas.user_schema import UserSchema, UserUpdateSchema
 
 blp = Blueprint("User", __name__, description="User API")
 
@@ -42,20 +40,14 @@ class User(MethodView):
         return result
 
 @blp.route("/login")
-class Login(MethodView):
-    def get(self):
-        return Response(render_template("login.html"))
-    
+class Login(MethodView):   
     @blp.arguments(UserSchema)
     def post(self, user_data):
         result = user_service.login_user(user_data)
         return result
     
 @blp.route("/register")
-class Register(MethodView):
-    def get(self):
-        return Response(render_template("register.html"))
-    
+class Register(MethodView):   
     @blp.arguments(UserSchema)
     def post(self, user_data):
         result = user_service.register_user(user_data)
@@ -65,16 +57,24 @@ class Register(MethodView):
 class Logout(MethodView):   
     @jwt_required()
     def post(self):
+        # Block access_token
         jti = get_jwt()['jti']
         user_service.add_jti_blocklist(jti)
+        
         return {"message": "Logout successfully!"}
     
 @blp.route("/refresh")
 class Refresh(MethodView):   
     @jwt_required(refresh=True)
     def post(self):
+        # Get id current user
         current_user = get_jwt_identity()
+        
+        # Create new access token
         new_token = create_access_token(identity=current_user, fresh=False)
+        
+        # Block previous access_token
         jti = get_jwt()['jti']
         user_service.add_jti_blocklist(jti)
+        
         return {"access_token": new_token}
