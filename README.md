@@ -1,4 +1,4 @@
-# Project NK ChatBot
+# Template Flask RestAPI
 ## Set up environment
 ```
 conda create -n backend python=3.10
