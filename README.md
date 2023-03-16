@@ -16,8 +16,7 @@ cd app
 ```
 python manage.py
 ```
-
-## Set up database - postgresql (Manual)
+## Set up database - postgresql (Manual) - Config path in config.py
 ### Initialize the database with Flask-Migrate
 Activate your virtual environment and run this command:
 ```
@@ -30,11 +29,11 @@ flask db migrate
 ```
 flask db upgrade
 ```
-
+### Add initial data
+```
+python init_data.py
+```
 ## API Document
 ```
-{{HOST}}/swagger-ui
+http://127.0.0.1:3000/swagger-ui
 ```
-
-## Deploy with Docker
-To be continued

@@ -65,7 +65,6 @@ python-dotenv==0.21.0
 python-engineio==4.3.4
 python-socketio==5.7.2
 pytz==2022.7
-pywin32==305
 pyzmq==24.0.1
 requests==2.28.1
 six==1.16.0

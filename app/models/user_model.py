@@ -1,4 +1,5 @@
 from db import db
+from datetime import datetime
 
 class UserModel(db.Model):
     __tablename__ = "user"
@@ -6,11 +7,6 @@ class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key = True) 
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(), nullable=False)
-    time_created = db.Column(db.String())
-    
-    def __init__(self, username, password, time_created):
-        self.username = username
-        self.password = password
-        self.time_created = time_created
-
-
+    block = db.Column(db.Boolean, default=False, nullable=False)
+    time_created = db.Column(db.String(), default=datetime.now())
+    roles = db.relationship("RoleModel", back_populates="users", secondary="user_role")

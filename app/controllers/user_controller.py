@@ -2,14 +2,18 @@ from services import user_service
 from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity, create_access_token
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
+from flask_principal import Permission, RoleNeed
+from schemas.user_schema import *
 
-from schemas.user_schema import UserSchema, UserUpdateSchema
+# Define some permissions
+admin_permission = Permission(RoleNeed('user_management'))
 
 blp = Blueprint("User", __name__, description="User API")
 
 @blp.route("/user")
 class UserList(MethodView):  
     @jwt_required()
+    @admin_permission.require(http_exception=403)
     @blp.response(200, UserSchema(many=True))
     def get(self):
         result = user_service.get_all_user()
@@ -30,13 +34,17 @@ class User(MethodView):
         return result
         
     @jwt_required()
-    def delete(self, user_id):
-        # Only admin can delete user
-        jwt = get_jwt()
-        if not jwt.get("is_admin"):
-            abort(401, message="Admin privilege requierd.")
-        
+    def delete(self, user_id):        
         result = user_service.delete_user(user_id)
+        return result
+
+@blp.route("/block-user/<int:user_id>")
+class BlockUser(MethodView):     
+    @jwt_required()  
+    # @admin_permission.require(http_exception=403)
+    @blp.arguments(UpdateBlockUserSchema)
+    def put(self, user_data, user_id):        
+        result = user_service.update_block_user(user_data, user_id)
         return result
 
 @blp.route("/login")
@@ -67,14 +75,6 @@ class Logout(MethodView):
 class Refresh(MethodView):   
     @jwt_required(refresh=True)
     def post(self):
-        # Get id current user
-        current_user = get_jwt_identity()
+        result = user_service.refresh_token()
         
-        # Create new access token
-        new_token = create_access_token(identity=current_user, fresh=False)
-        
-        # Block previous access_token
-        jti = get_jwt()['jti']
-        user_service.add_jti_blocklist(jti)
-        
-        return {"access_token": new_token}
+        return result

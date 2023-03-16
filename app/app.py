@@ -6,6 +6,8 @@ from models.blocklist_model import BlocklistModel
 from blueprint import register_routing
 from flask_cors import CORS
 from flask_migrate import Migrate
+from models.user_model import UserModel
+from flask_principal import Principal, identity_loaded, RoleNeed
 
 app = Flask(__name__)
 
@@ -13,9 +15,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 # CORS - manage resource
-CORS(app, resources={
-    r"/": { "origins": "*" }
-})
+CORS(app, supports_credentials='true' ,resources={r"*": { "origins": "*" }})
 
 # Connect with db
 db.init_app(app)
@@ -26,8 +26,39 @@ migrate = Migrate(app, db)
 # Register Blueprint
 register_routing(app)
 
+#################################################################################
+
+# Initialize Flask-Principal
+principal = Principal(app)
+
+# Define a function to load the user's identity
+@identity_loaded.connect_via(app)
+def on_identity_loaded(sender, identity):
+    # Get User
+    user = UserModel.query.filter_by(id=identity.id).first()
+    
+    # Get all unique permissions
+    for role in user.roles:
+        # get permission
+        for permission in role.permissions:
+            # Add the user's roles to the identity object
+            identity.provides.add(RoleNeed(permission.route))
+
+#################################################################################
+
 # Config JWT
 jwt = JWTManager(app)
+
+@jwt.token_verification_loader
+def custom_token_verification_callback(jwt_header, jwt_data):    
+    # Query in database
+    user = UserModel.query.filter_by(id=jwt_data['sub']).first()
+    
+    # If user was blocked, user will not access.
+    if user.block == True:
+        return False
+    
+    return True
 
 @jwt.token_in_blocklist_loader
 def check_if_token_in_blocklist(jwt_header, jwt_payload):
