@@ -1,11 +1,16 @@
 from datetime import timedelta
 import secrets
+import os
 
 DEFAULT_ROLE = 3
 
 class Config(object):
-    SECRET_KEY = 'my-key'
+    SECRET_KEY = os.urandom(24)
     CORS_HEADERS = 'Content-Type'
+    SESSION_COOKIE_HTTPONLY=True
+    REMEMBER_COOKIE_HTTPONLY=True
+    SESSION_COOKIE_SAMESITE="Strict"
+    PERMANENT_SESSION_LIFETIME = timedelta(days=30)
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///database/database.db'
     SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:070600@localhost/test_db'
     SQLALCHEMY_TRACK_MODIFICATION = False
