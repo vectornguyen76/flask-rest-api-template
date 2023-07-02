@@ -1,8 +1,8 @@
-from db import db
-from models.role_model import RoleModel
-from models.role_permission_model import RolePermissionModel
-from models.user_role_model import UserRoleModel
-from models.permission_model import PermissionModel
+from app.db import db
+from app.models.role_model import RoleModel
+from app.models.role_permission_model import RolePermissionModel
+from app.models.user_role_model import UserRoleModel
+from app.models.permission_model import PermissionModel
 from sqlalchemy import asc
 from flask_smorest import abort
 

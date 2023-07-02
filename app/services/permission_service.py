@@ -1,5 +1,5 @@
-from db import db
-from models.permission_model import PermissionModel
+from app.db import db
+from app.models.permission_model import PermissionModel
 from sqlalchemy import asc
 from flask_smorest import abort
 

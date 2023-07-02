@@ -1,9 +1,9 @@
-from services import user_role_service
+from app.services import user_role_service
 from flask.views import MethodView
 from flask_smorest import Blueprint
 from flask_principal import Permission, RoleNeed
 from flask_jwt_extended import jwt_required
-from schemas.user_schema import RoleSchema, UserAndRoleSchema
+from app.schemas.user_schema import RoleSchema, UserAndRoleSchema
 
 blp = Blueprint("User And Role", __name__, description="User And Role API")
 

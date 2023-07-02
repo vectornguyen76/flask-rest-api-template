@@ -1,7 +1,7 @@
-from db import db
-from models.user_model import UserModel
-from models.role_model import RoleModel
-from models.blocklist_model import BlocklistModel
+from app.db import db
+from app.models.user_model import UserModel
+from app.models.role_model import RoleModel
+from app.models.blocklist_model import BlocklistModel
 from datetime import datetime
 from passlib.hash import pbkdf2_sha256
 from sqlalchemy import asc
@@ -9,8 +9,9 @@ from flask import current_app
 from flask_principal import identity_changed, Identity
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, get_jwt
 from flask_smorest import abort
-from config import DEFAULT_ROLE
-from services import user_role_service
+from app.services import user_role_service
+
+DEFAULT_ROLE = 3
 
 def get_all_user():
     results = UserModel.query.order_by(asc(UserModel.id)).all()

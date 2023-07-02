@@ -1,6 +1,6 @@
-from db import db
-from models.user_model import UserModel
-from models.role_model import RoleModel
+from app.db import db
+from app.models.user_model import UserModel
+from app.models.role_model import RoleModel
 from flask_smorest import abort
 
 def link_roles_to_user(user_id, role_id):

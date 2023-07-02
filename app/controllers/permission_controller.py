@@ -1,9 +1,9 @@
-from services import permission_service, role_permission_service
+from app.services import permission_service, role_permission_service
 from flask.views import MethodView
 from flask_smorest import Blueprint
 from flask_principal import Permission, RoleNeed
 from flask_jwt_extended import jwt_required
-from schemas.user_schema import PermissionSchema, UpdatePermissionRoleSchema
+from app.schemas.user_schema import PermissionSchema, UpdatePermissionRoleSchema
 
 blp = Blueprint("Permission", __name__, description="Permission API")
 

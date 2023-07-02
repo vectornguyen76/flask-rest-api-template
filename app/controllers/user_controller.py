@@ -1,19 +1,19 @@
-from services import user_service
+from app.services import user_service
 from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity, create_access_token
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from flask_principal import Permission, RoleNeed
-from schemas.user_schema import *
+from app.schemas.user_schema import *
 
 # Define some permissions
-admin_permission = Permission(RoleNeed('user_management'))
+# admin_permission = Permission(RoleNeed('user_management'))
 
 blp = Blueprint("User", __name__, description="User API")
 
 @blp.route("/user")
 class UserList(MethodView):  
     @jwt_required()
-    @admin_permission.require(http_exception=403)
+    # @admin_permission.require(http_exception=403)
     @blp.response(200, UserSchema(many=True))
     def get(self):
         result = user_service.get_all_user()

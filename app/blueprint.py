@@ -1,9 +1,9 @@
 from flask_smorest import Api
-from controllers.user_controller import blp as UserBlueprint
-from controllers.role_controller import blp as RoleBlueprint
-from controllers.permission_controller import blp as PermissionBlueprint
-from controllers.user_role_controller import blp as UserRoleBlueprint
-from controllers.role_permission_controller import blp as RolePermissionBlueprint
+from app.controllers.user_controller import blp as UserBlueprint
+from app.controllers.role_controller import blp as RoleBlueprint
+from app.controllers.permission_controller import blp as PermissionBlueprint
+from app.controllers.user_role_controller import blp as UserRoleBlueprint
+from app.controllers.role_permission_controller import blp as RolePermissionBlueprint
 
 # Register Blueprint
 def register_routing(app):
