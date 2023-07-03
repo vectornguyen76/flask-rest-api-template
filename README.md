@@ -15,6 +15,10 @@ Rest API template developed in Python with the Flask framework. The template cov
 - **Database:** PostgreSQL 
 - **Python WSGI HTTP Server:** Gunicorn
 - **Proxy:** Nginx
+
+To activate this project's virtualenv, run pipenv shell.
+Alternatively, run a command inside the virtualenv with pipenv run.
+
 ## Set up environment
 ```
 conda create -n backend python=3.10
