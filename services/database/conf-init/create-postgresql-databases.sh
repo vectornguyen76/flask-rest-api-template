@@ -10,9 +10,9 @@ function create_user_and_database() {
 	    GRANT ALL PRIVILEGES ON DATABASE $database TO $database;
 	EOSQL
 }
-if [ $POSTGRES_DATABASES ]; then
-	echo "Multiple database creation requested: $POSTGRES_DATABASES"
-	for db in $(echo $POSTGRES_DATABASES | tr ',' ' '); do
+if [ $POSTGRES_DB ]; then
+	echo "Multiple database creation requested: $POSTGRES_DB"
+	for db in $(echo $POSTGRES_DB | tr ',' ' '); do
 		create_user_and_database $db
 	done
 	echo "Multiple databases created"
