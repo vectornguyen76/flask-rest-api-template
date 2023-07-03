@@ -13,4 +13,4 @@ API_HOST=0.0.0.0
 DATABASE_URL=sqlite:///production.db
 
 # Deployment platform
-PLATFORM_DEPLOY=EC2-AWS
+PLATFORM_DEPLOY=AWS
