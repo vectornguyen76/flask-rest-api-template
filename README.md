@@ -39,9 +39,9 @@ Rest API template developed in Python with the Flask framework. The template cov
 
 ## Requirements
 - [Python 3.9](https://www.python.org/downloads/)
-- [Anaconda/Miniconda](https://www.hostinger.com/tutorials/how-to-install-anaconda-on-ubuntu/)
-- [Docker 20.10.17](https://docs.docker.com/engine/install/ubuntu/)
-- [Docker-Compose v2.10.2](https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04)
+- [Anaconda/Miniconda](instructions/anaconda-miniconda.md)
+- [Docker](instructions/docker-dockercompose.md)
+- [Docker-Compose v2.10.2](instructions/docker-dockercompose.md)
 - [Github](https://github.com)
 
 ## Environments
