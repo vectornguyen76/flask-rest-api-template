@@ -1,5 +1,11 @@
 #!/bin/sh
 
+if [[ -z "${APP_ENV}" ]]; then
+    echo "Add environment variable in production"
+
+    source .env.pro;
+fi
+
 echo "Database:" $DATABASE
 
 if [ "$DATABASE" = "postgres" ]
@@ -24,6 +30,11 @@ if [ "$APP_ENV" = "local" ]; then
     flask create-user-admin
     echo "Done init user-admin"
 
+    echo "Run app with gunicorn server..."
+    gunicorn --bind $API_HOST:$API_PORT $API_ENTRYPOINT --timeout 10 --workers 4;
+fi
+
+if [ "$APP_ENV" = "production" ]; then
     echo "Run app with gunicorn server..."
     gunicorn --bind $API_HOST:$API_PORT $API_ENTRYPOINT --timeout 10 --workers 4;
 fi

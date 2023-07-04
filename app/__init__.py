@@ -17,11 +17,8 @@ def create_app(settings_module):
     cors.init_app(app, supports_credentials='true' ,resources={r"*": { "origins": "*" }})
     manage.init_app(app)
 
-    # Configuracion de logging
+    # Logging configuration
     configure_logging(app)
-
-    # Deshabilitar el modo estricto de acabado en una URL con /
-    app.url_map.strict_slashes = False
 
     # Register Blueprint
     register_routing(app)

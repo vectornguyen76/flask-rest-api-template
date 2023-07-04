@@ -41,7 +41,7 @@ Rest API template developed in Python with the Flask framework. The template cov
 - [Python 3.9](https://www.python.org/downloads/)
 - [Anaconda/Miniconda](https://www.hostinger.com/tutorials/how-to-install-anaconda-on-ubuntu/)
 - [Docker 20.10.17](https://docs.docker.com/engine/install/ubuntu/)
-- [Docker-Compose](https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04)
+- [Docker-Compose v2.10.2](https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04)
 - [Github](https://github.com)
 
 ## Environments
@@ -83,7 +83,23 @@ Development environment that uses PostgreSQL in local and uses the server flask 
     GRANT ALL PRIVILEGES ON DATABASE db_dev TO db_user;
     ```
 
-2. Create or update **.env** file and enter the environment variables of the environment.
+2. Create or update **.env** file and enter the environment variables of the environment. Example:
+   ```shell
+    # APP configuration
+    APP_NAME="Flask API Rest Template"
+    APP_ENV="develop"
+
+    # Flask Configuration
+    FLASK_APP= "app:app"
+    FLASK_DEBUG="true"
+    APP_SETTINGS_MODULE="config.DevelopConfig"
+    FLASK_RUN_HOST="0.0.0.0"
+    FLASK_RUN_PORT="5000"
+
+    # Database service configuration
+    DATABASE_URL="postgresql://db_user:db_password@localhost/db_dev"
+   ```
+
 3. Run:
     Create Database
     ```shell
@@ -137,7 +153,23 @@ Testing environment that uses PostgreSQL as database (db_test) and performs unit
     ```shell
     GRANT ALL PRIVILEGES ON DATABASE db_test TO db_user;
     ```
-2. Create or update **.env** file and enter the environment variables of the environment.
+2. Create or update **.env** file and enter the environment variables of the environment. Example:
+   ```shell
+    # APP configuration
+    APP_NAME="Flask API Rest Template"
+    APP_ENV="testing"
+
+    # Flask Configuration
+    FLASK_APP= "app:app"
+    FLASK_DEBUG="true"
+    APP_SETTINGS_MODULE="config.TestingConfig"
+    FLASK_RUN_HOST="0.0.0.0"
+    FLASK_RUN_PORT="3000"
+
+    # Database service configuration
+    DATABASE_TEST_URL="postgresql://db_user:db_password@localhost/db_test"
+   ```
+
 3. Init database:
     Create Database
     ```shell
