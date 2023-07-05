@@ -1,10 +1,6 @@
 #!/bin/sh
 
-if [[ -z "${APP_ENV}" ]]; then
-    echo "Add environment variable in production"
-
-    source .env.pro;
-fi
+echo "Start run entrypoint script..."
 
 echo "Database:" $DATABASE
 
@@ -12,8 +8,10 @@ if [ "$DATABASE" = "postgres" ]
 then
     echo "Waiting for postgres..."
 
-    while ! nmap -p $BBDD_PORT --open -oG - $BBDD_HOST ; do
-        sleep 0.1
+    while ! psql -h $BBDD_HOST -U $POSTGRES_USER -d $POSTGRES_DB
+    do
+        echo "Waiting for PostgreSQL..."
+        sleep 0.5
     done
 
     echo "PostgreSQL started"

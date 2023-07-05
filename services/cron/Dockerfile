@@ -7,11 +7,11 @@ RUN apk update \
     && apk upgrade \
     && apk add --no-cache postgresql-client
 
-# Copy entry.sh
-COPY entry.sh /app
+# Copy entrypoint.sh
+COPY entrypoint.sh /app
 
-# Chmod to entry.sh
-RUN chmod +x ./entry.sh
+# Chmod to entrypoint.sh
+RUN chmod +x ./entrypoint.sh
 
-# Run entry.sh
-ENTRYPOINT ["/app/entry.sh"]
+# Run entrypoint.sh
+ENTRYPOINT [ "/app/entrypoint.sh" ]

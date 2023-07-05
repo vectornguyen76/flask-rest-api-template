@@ -1,9 +1,9 @@
 FROM python:3.9-slim
 
-# Install nmap
-RUN apt-get update && apt-get install -y nmap
-
 WORKDIR /app
+
+# Update the package lists and install the PostgreSQL client
+RUN apt-get update && apt-get install -y postgresql-client
 
 COPY requirements.txt /app
 

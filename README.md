@@ -217,27 +217,31 @@ Containerized services separately with PostgreSQL databases (db), API (api) and 
 1. Create **.env.api.local**, **.env.db.local** and **.env.cron.local** files and enter environment variables for
     each service. In the local environment there are 4 services (api, db, nginx, cron). For example:
     1. **.env.api.local**:
-       ```shell
-       # APP configuration
-       APP_NAME=[Name APP] # For example Flask API Rest Template
-       APP_ENV=local
-      
-       # Flask configuration
-       API_ENTRYPOINT=app:app
-       APP_SETTINGS_MODULE=config.LocalConfig
-       APP_TEST_SETTINGS_MODULE=config.TestingConfig
-      
-       # API service configuration
-       API_HOST=<api_host> # For example 0.0.0.0
-       API_PORT=<port_api> # For example 5000
-      
-       # Database service configuration
-       DB_HOST=<name_container_bbdd> # For example db (name service in docker-compose)
-       DB_PORT=<port_container_bbdd> # For example 5432 (port service in docker-compose)
-       DATABASE=postgres
-       DATABASE_TEST_URL=<url database test> # For example postgresql+psycopg2://db_user:db_password@db:5432/db_test
-       DATABASE_URL=<url database> # For example postgresql+psycopg2://db_user:db_password@db:5432/db_dev
-       ```
+        ```shell
+        # APP configuration
+        APP_NAME=[Name APP] # For example Flask API Rest Template
+        APP_ENV=local
+        
+        # Flask configuration
+        API_ENTRYPOINT=app:app
+        APP_SETTINGS_MODULE=config.LocalConfig
+        APP_TEST_SETTINGS_MODULE=config.TestingConfig
+        
+        # API service configuration
+        API_HOST=<api_host> # For example 0.0.0.0
+        API_PORT=<port_api> # For example 5000
+        
+        # Database service configuration
+        DATABASE=postgres
+        DB_HOST=<name_container_bbdd> # For example db_service (name service in docker-compose)
+        DB_PORT=<port_container_bbdd> # For example 5432 (port service in docker-compose)
+        POSTGRES_DB=<name_database> # For example db_dev 
+        POSTGRES_USER=<name_user> # For example db_user 
+        PGPASSWORD=<password_user> # For example db_password 
+
+        DATABASE_TEST_URL=<url database test> # For example postgresql+psycopg2://db_user:db_password@db_service:5432/db_test
+        DATABASE_URL=<url database> # For example postgresql+psycopg2://db_user:db_password@db_service:5432/db_dev
+        ```
     2. **.env.db.local**:
        ```shell
        POSTGRES_USER=<name_user> # For example db_user
