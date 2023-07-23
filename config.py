@@ -85,7 +85,7 @@ class TestingConfig(DefaultConfig):
     LOG_FILE_API = f'{basedir}/logs/api_tests.log'
 
     # Database configuration
-    SQLALCHEMY_DATABASE_URI = "postgresql://db_user:db_password@postgres:5432/db_test"
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_TEST_URL')
 
 
 class LocalConfig(DefaultConfig):
