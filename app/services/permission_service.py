@@ -9,10 +9,10 @@ def get_all_permission():
 
 def post_permission(permission_data):
     name = permission_data['name']
-    route = permission_data['route']
+    description = permission_data['description']
 
     try:
-        new_row = PermissionModel(name=name, route=route)
+        new_row = PermissionModel(name=name, description=description)
     
         db.session.add(new_row)
         db.session.commit()
@@ -36,8 +36,8 @@ def update_permission(permission_data, permission_id):
         if permission_data['name']:
             permission.name = permission_data['name']
             
-        if permission_data['route']:
-            permission.route = permission_data['route']
+        if permission_data['description']:
+            permission.description = permission_data['description']
             
         db.session.commit()
     except:

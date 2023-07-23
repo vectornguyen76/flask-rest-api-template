@@ -1,7 +1,6 @@
 from app.extention import jwt
-from app.models.user_model import UserModel
+from app.models import UserModel, BlocklistModel
 from flask import jsonify
-from models.blocklist_model import BlocklistModel 
 
 @jwt.token_verification_loader
 def custom_token_verification_callback(jwt_header, jwt_data):    
