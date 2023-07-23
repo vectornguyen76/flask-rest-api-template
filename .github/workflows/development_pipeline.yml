@@ -42,6 +42,6 @@ jobs:
 
       - name: Unit Tests
         env:
-          DATABASE_TEST_URL: postgresql://db_user:db_password@postgres:5432/db_test
+          DATABASE_TEST_URL: postgresql://db_user:db_password@localhost/db_test
         run: python -m flask tests
         
