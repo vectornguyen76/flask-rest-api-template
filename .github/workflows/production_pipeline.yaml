@@ -1,5 +1,7 @@
-name: hello-world
-on: push
+name: production
+on: 
+  pull_request:
+    branches: main
 jobs:
   my-job:
     runs-on: ubuntu-latest
