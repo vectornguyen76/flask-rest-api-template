@@ -3,7 +3,8 @@
 		"_postman_id": "03bd1377-f65e-4a5d-b478-2af9d4f41f18",
 		"name": "Template REST API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20498029"
+		"_exporter_id": "20498029",
+		"_collection_link": "https://dark-escape-873868.postman.co/workspace/My-Workspace~fd59678e-5c9a-4e36-8407-3c2ba6dcae38/collection/20498029-03bd1377-f65e-4a5d-b478-2af9d4f41f18?action=share&creator=20498029&source=collection_link"
 	},
 	"item": [
 		{
@@ -59,34 +60,6 @@
 							"path": [
 								"user",
 								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{HOST}}/user/8",
-							"host": [
-								"{{HOST}}"
-							],
-							"path": [
-								"user",
-								"8"
 							]
 						}
 					},
@@ -300,7 +273,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"123456\"\r\n}",
+							"raw": "{\r\n    \"username\": \"member\",\r\n    \"password\": \"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -566,7 +539,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"User Management\",\r\n    \"route\": \"user_management\"\r\n}",
+							"raw": "{\r\n    \"name\": \"read\",\r\n    \"description\": \"Read data\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -602,7 +575,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"User Management\",\r\n    \"route\": \"user_management\"\r\n}",
+							"raw": "{\r\n    \"name\": \"read\",\r\n    \"description\": \"Read data\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

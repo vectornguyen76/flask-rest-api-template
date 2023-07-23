@@ -10,13 +10,13 @@ class DefaultConfig:
     """
     # Flask Configuration
     APP_NAME = os.environ.get('APP_NAME')
-    SECRET_KEY = secrets.token_urlsafe(64)
+    SECRET_KEY = "e42ebf32a22c7cef7f4a33c71f90f0d8ea65e63144f952e57e1b39b26cc26a6f"
     PROPAGATE_EXCEPTIONS = True
     DEBUG = False
     TESTING = False
 
     # Configuration of Flask-JWT-Extended
-    JWT_SECRET_KEY = secrets.token_urlsafe(64)
+    JWT_SECRET_KEY = "d7da6e940725de5a15b7e48f5a71f535a315c72a5372c1d3bb8691b38b5f29a1"
     # Determines the minutes that the access token remains active
     JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=30)
     # Determines the days that the refresh token remains active
@@ -52,8 +52,7 @@ class DefaultConfig:
     APP_ENV = ''
 
     # Logging
-    FTM = '[%(asctime)s.%(msecs)d]\t %(levelname)s \t[%(name)s.%(funcName)s:%(lineno)d]\t %(message)s'
-    DATE_FMT = '%d/%m/%Y %H:%M:%S'
+    DATE_FMT = '%Y-%m-%d %H:%M:%S'
     LOG_FILE_API = f'{basedir}/logs/api.log'
 
 
