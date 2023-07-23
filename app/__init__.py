@@ -1,6 +1,8 @@
 import os
 from flask import Flask
-from app.extention import migrate, jwt, cors
+from app.extention import migrate, cors
+from app.utils.auth import jwt
+from app.utils.principal import principal
 from app.utils.logging import configure_logging
 from app.db import db
 from app.blueprint import register_routing
@@ -15,6 +17,7 @@ def create_app(settings_module):
     migrate.init_app(app, db)
     jwt.init_app(app)
     cors.init_app(app, supports_credentials='true' ,resources={r"*": { "origins": "*" }})
+    principal.init_app(app)
     manage.init_app(app)
 
     # Logging configuration
@@ -24,7 +27,6 @@ def create_app(settings_module):
     register_routing(app)
 
     return app
-
 
 settings_module = os.getenv('APP_SETTINGS_MODULE')
 app = create_app(settings_module)

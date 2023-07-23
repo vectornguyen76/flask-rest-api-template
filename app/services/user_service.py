@@ -50,6 +50,11 @@ def update_user(user_data, user_id):
     return {"message": "Update successfully!"}
 
 def update_block_user(user_data, user_id):   
+    # Only admin can delete user
+    jwt = get_jwt()
+    if not jwt.get("is_admin"):
+        abort(401, message="Admin privilege requierd.")
+    
     if user_id == 1:
         abort(401, message="Can not block Super Admin!")
     
