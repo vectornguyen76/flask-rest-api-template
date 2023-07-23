@@ -36,5 +36,12 @@ jobs:
       - name: Unit Tests
         env:
           DATABASE_TEST_URL: postgresql://db_user:db_password@postgres:5432/db_test
+          # APP_NAME: "Flask API Rest Template"
+          # APP_ENV: "develop"
+          # FLASK_APP: "app:app"
+          # FLASK_DEBUG: "true"
+          APP_TEST_SETTINGS_MODULE: "config.TestingConfig"
+          # FLASK_RUN_HOST: "0.0.0.0"
+          # FLASK_RUN_PORT: "5000"
         run: python -m unittest discover -p '*_unit.py'
         
