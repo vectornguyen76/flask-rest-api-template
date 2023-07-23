@@ -40,9 +40,10 @@ services:
 
   nginx_service:
     container_name: nginx_container
-    image: nginx:1.25.1-alpine
-    volumes:
-      - ./services/server/nginx.conf:/etc/nginx/conf.d/default.conf
+    image: nginx_image
+    build:
+      context: ./services/server
+      dockerfile: Dockerfile
     ports:
       - 8080:80
     depends_on:
