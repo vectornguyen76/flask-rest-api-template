@@ -1,9 +1,13 @@
+import logging
 from app.services import user_service
 from flask_jwt_extended import jwt_required, get_jwt
 from flask.views import MethodView
 from flask_smorest import Blueprint
 from flask_principal import Permission, RoleNeed
 from app.schemas.user_schema import *
+
+# Create logger for this module
+logger = logging.getLogger(__name__)
 
 # Define permissions
 read_permission = Permission(RoleNeed('read'))
@@ -50,6 +54,7 @@ class BlockUser(MethodView):
 class Login(MethodView):   
     @blp.arguments(UserSchema)
     def post(self, user_data):
+        logger.info(f"User: {user_data['username']} login...")
         result = user_service.login_user(user_data)
         return result
     

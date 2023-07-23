@@ -52,8 +52,7 @@ class DefaultConfig:
     APP_ENV = ''
 
     # Logging
-    FTM = '[%(asctime)s.%(msecs)d]\t %(levelname)s \t[%(name)s.%(funcName)s:%(lineno)d]\t %(message)s'
-    DATE_FMT = '%d/%m/%Y %H:%M:%S'
+    DATE_FMT = '%Y-%m-%d %H:%M:%S'
     LOG_FILE_API = f'{basedir}/logs/api.log'
 
 
