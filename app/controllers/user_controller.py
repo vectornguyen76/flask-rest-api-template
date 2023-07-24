@@ -54,7 +54,7 @@ class BlockUser(MethodView):
 class Login(MethodView):   
     @blp.arguments(UserSchema)
     def post(self, user_data):
-        logger.info(f"User: {user_data['username']} login...")
+        logger.info(f"User {user_data['username']} is login...")
         result = user_service.login_user(user_data)
         return result
     
