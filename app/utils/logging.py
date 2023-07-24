@@ -4,11 +4,11 @@ from flask import Flask
 from datetime import datetime
 
 def configure_logging(app: Flask):
-    # Set the logging level
-    logging.basicConfig(level=logging.DEBUG)
-
     # Create a logger instance
     logger = logging.getLogger(app.name)
+    
+    # Set the logging level
+    logger.setLevel(logging.DEBUG)
     
     # Set the timezone to Vietnam
     vietnam_timezone = pytz.timezone('Asia/Ho_Chi_Minh')
@@ -31,7 +31,3 @@ def configure_logging(app: Flask):
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(logging.Formatter(file_log_format, datefmt=app.config['DATE_FMT']))
     logger.addHandler(file_handler)
-    
-    # Disable the INFO log messages from werkzeug
-    # werkzeug_logger = logging.getLogger('werkzeug')
-    # werkzeug_logger.setLevel(logging.ERROR)  # Set the level to ERROR to turn off INFO messages
