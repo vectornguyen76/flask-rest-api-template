@@ -23,21 +23,6 @@ services:
     volumes:
       - postgresql_data:/var/lib/postgresql/data/
 
-  cron_service:
-    container_name: cron_container
-    image: cron_image
-    build:
-      context: ./services/cron
-      dockerfile: Dockerfile
-    env_file:
-      - .env.cron.local
-    volumes:
-      - ./services/cron/cron_tasks/daily:/etc/periodic/daily/:ro
-      - ./services/database/backups:/var/backups/postgres
-      - ./services/cron/logs:/var/log/
-    depends_on:
-      - db_service
-
   nginx_service:
     container_name: nginx_container
     image: nginx_image
