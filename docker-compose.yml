@@ -27,7 +27,7 @@ services:
     container_name: nginx_container
     image: nginx_image
     build:
-      context: ./services/server
+      context: ./server
       dockerfile: Dockerfile
     ports:
       - 8080:80
