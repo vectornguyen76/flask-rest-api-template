@@ -1,6 +1,5 @@
 # Flask API REST Template
-Rest API template developed in Python with the Flask framework. The template covers user management, jwt tokens for authentication, and assign permissions for each user with Flask Principal. In the local environment, it uses docker to create an environment made up of several services such as api (flask), database (postgresql), swagger (swagger-ui), reverse-proxy (nginx), cron to perform database backups automatically.
-
+Rest API template developed in Python with the Flask framework. The template covers user management, jwt tokens for authentication, and assign permissions for each user with Flask Principal. In the local environment, it uses docker to create an environment made up of several services such as api (flask), database (postgresql), reverse-proxy (nginx).
 ## Index
 - [Technology](#technology)
 - [Requirements](#requirements)
@@ -9,7 +8,6 @@ Rest API template developed in Python with the Flask framework. The template cov
     - [Testing](#testing)
     - [Local](#local)
     - [Production](#production)
-- [Backups](#backups)
 - [Flask Commands](#flask-commands)
    - [Flask-cli](#flask-cli)
 - [Database commands](#bbdd-commands)
@@ -23,11 +21,10 @@ Rest API template developed in Python with the Flask framework. The template cov
 - **Web Framework:** Flask
 - **ORM:** Flask-sqlalchemy
 - **Swagger:** Swagger-UI
-- **Authentication:** JSON Web Token
+- **Authentication:** Flask Json Web Token
 - **Permission:** Flask Principal
 - **Serialization, Deserialization and Validation:** Marshmallow
 - **Migration Database:** Flask-migrate
-- **Authentication:** Flask-jwt-extended
 - **Environment manager:** Anaconda/Miniconda
 - **Containerization:** Docker, docker-compose
 - **Database:** PostgreSQL 
@@ -214,8 +211,8 @@ Testing environment that uses PostgreSQL as database (db_test) and performs unit
 ### Local
 Containerized services separately with PostgreSQL databases (db), API (api) and Nginx reverse proxy (nginx) with Docker and docker-compose.
 
-1. Create **.env.api.local**, **.env.db.local** and **.env.cron.local** files and enter environment variables for
-    each service. In the local environment there are 4 services (api, db, nginx, cron). For example:
+1. Create **.env.api.local**, **.env.db.local** files and enter environment variables for
+    each service. In the local environment there are 3 services (api, db, nginx). For example:
     1. **.env.api.local**:
         ```shell
         # APP configuration
@@ -250,58 +247,7 @@ Containerized services separately with PostgreSQL databases (db), API (api) and 
 
        POSTGRES_DB=<name_DB> # For example db_dev
        ```
-    3. **.env.cron.local**:
-       ```shell
-       # Service configuration DB backups
 
-       # User to access the database server, example root
-       BBDD_USER=<name_user> # For example root
-        
-       # Password to access the postgresql database
-       PGPASSWORD=<password> # For example password
-        
-       # Host name (or IP address) of the PostgreSQL server, example localhost
-       DB_HOST=<host> # For example db (name service in docker-compose)
-        
-       # PostgreSQL server port, example 5432
-       BBDD_PORT=<port> # For example 5432 (port service in docker-compose)
-        
-       # Type of database
-       DATABASE=<database_type> # For example postgres
-        
-       # List of DBNAMES for Daily/Weekly Backup e.g. "DB1DB2DB3"
-       BACKUPS_DBNAMES=<tables> # For example all
-        
-       # Backup directory location e.g. /backups
-       BACKUPS_BACKUPDIR=<backups_dir> # For example /var/backups/postgres
-        
-       # LOG directory location
-       BACKUPS_LOGDIR=<dir_logs> # For example /var/log
-        
-       # List of DBNAMES to EXLUCDE if DBNAMES are set to all (must be in " quotes)
-       BACKUPS_DBEXCLUDE=<tables> # For example db_test root postgres template0 template1
-        
-       # Include CREATE DATABASE in backup?
-       BACKUPS_CREATE_DATABASE=<yes_or_no> # For example yes
-        
-       # Separate backup directory and file for each DB? (yes or no)
-       BACKUPS_SEPDIR=<yes_or_no> # For example yes
-        
-       # Which day do you want weekly backups? (1 to 7 where 1 is Monday)
-       BACKUPS_DOWEEKLY=<day_week> # For example 7
-        
-       # Which day do you want monthly backups? (1 to 28)
-       BACKUPS_DOMONTHLY=<day_month> # For example 1
-        
-       # Choose Compression type. (gzip or bzip2)
-       BACKUPS_COMP=<compression_type> # For example bzip2
-        
-       # Command to run before backups (uncomment to use)
-       #BACKUPS_PREBACKUP=<command> # For example /etc/pgsql-backup-pre
-        
-       # Command run after backups (uncomment to use)
-       #BACKUPS_POSTBACKUP=<command> # For example sh /home/backups/scripts/ftp_pgsql
-       ```
 2. Run:
     1. Build and run services:
        ```shell
@@ -356,19 +302,6 @@ Apply CI/CD with Github Actions to automatically deployed to AWS platform use EC
     1. **AWS_ACCESS_KEY_ID**: access token
     2. **AWS_SECRET_ACCESS_KEY**: secret access
     3. **AWS_DEFAULT_REGION**: region
-
-## Backups
-In the local environment there is a service called `cron` and it is in charge of executing a script that performs a backup
-from the database, in this case from postgresql. The script is run daily by cron and makes a copy
-daily, weekly and monthly.
-
-- `Daily` backups are rotated weekly.
-- `weekly` backups are run by default on Saturday morning when cron.daily scripts are executed.
-It can be changed with the `DOWEEKLY` setting. Weekly backups are rotated on a 5-week cycle.
-- `Monthly` backups run on the 1st of every month. It can be changed with the `DOMONTHLY` setting.
-   Monthly backups are NOT automatically rotated.
-
-**Note:** It may be a good idea to copy the monthly backups offline or to another server.
 
 ## Flask Commands
 ### Flask-cli
