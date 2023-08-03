@@ -43,4 +43,19 @@ jobs:
         env:
           DATABASE_TEST_URL: postgresql://db_user:db_password@localhost/db_test
         run: python -m flask tests
+
+  deploy-service:
+    runs-on: ubuntu-latest
+    env:	
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: 'us-east-1'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Authenticate Docker Hub
+        id: docker_hub_auth
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
         
