@@ -50,12 +50,14 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: 'us-east-1'
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Authenticate Docker Hub
         id: docker_hub_auth
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: docker login -u ${{ env.DOCKERHUB_USERNAME }} -p ${{ env.DOCKERHUB_PASSWORD }}
 
         
