@@ -1,0 +1,22 @@
+[
+  {
+    "ParameterKey": "VpcCIDR",
+    "ParameterValue": "10.0.0.0/16"
+  }, 
+  {
+    "ParameterKey": "PublicSubnetCIDR",
+    "ParameterValue": "10.0.1.0/24"
+  },
+  {
+    "ParameterKey": "InstanceType",
+    "ParameterValue": "t3.medium"
+  },
+  {
+    "ParameterKey": "KeyPair",
+    "ParameterValue": "my-keypair"
+  },
+  {
+    "ParameterKey": "AMItoUse",
+    "ParameterValue": "ami-053b0d53c279acc90"
+  }
+]
