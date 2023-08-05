@@ -60,4 +60,12 @@ jobs:
         id: docker_hub_auth
         run: docker login -u ${{ env.DOCKERHUB_USERNAME }} -p ${{ env.DOCKERHUB_PASSWORD }}
 
+      - name: Build Docker
+        id: build_docker
+        run: docker compose build
+
+      - name: Push images to Docker Hub
+        id: push_images
+        run: docker compose push
+
         
