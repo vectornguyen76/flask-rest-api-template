@@ -1,0 +1,40 @@
+- name: "Creates directory"
+  file:
+    path: "/home/ubuntu/server"
+    state: "directory"
+    mode: 0755
+
+- name: "Copy compressed app folder"
+  copy:
+    src: "artifact-app.tar.gz"
+    dest: "/home/ubuntu/server/artifact-app.tar.gz"
+
+- name: "Extract app"
+  unarchive:
+    remote_src: yes
+    src: "/home/ubuntu/server/artifact-app.tar.gz"
+    dest: "/home/ubuntu/server"
+      
+- name: Pull mlflow image
+  community.docker.docker_image:
+    name: "{{ mlflow_image_name }}"
+    tag: "{{ mlflow_tag_name }}"
+    source: pull
+
+- name: Pull model_predictor image
+  community.docker.docker_image:
+    name: "{{ model_predictor_image_name }}"
+    tag: "{{ model_predictor_tag_name }}"
+    source: pull
+
+- name: Run mlflow container
+  become: True
+  shell:
+    chdir: /home/ubuntu/server
+    cmd: "docker compose -f deployment/mlflow/docker-compose.yml up -d"
+
+- name: Run model_predictor container
+  become: True
+  shell:
+    chdir: /home/ubuntu/server
+    cmd: "bash deployment/deploy.sh deploy_run_predictor data/model_config/phase-1/prob-1/model-1.yml data/model_config/phase-1/prob-2/model-1.yml 5040"
