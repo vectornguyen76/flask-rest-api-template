@@ -14,7 +14,7 @@
     remote_src: yes
     src: "/home/ubuntu/server/artifact-app.tar.gz"
     dest: "/home/ubuntu/server"
-      
+
 - name: Pull mlflow image
   community.docker.docker_image:
     name: "{{ mlflow_image_name }}"

@@ -1,12 +1,15 @@
 import os
+
 from flask import Flask
-from app.extention import migrate, cors
-from app.utils.auth import jwt
-from app.utils.principal import principal
-from app.utils.logging import configure_logging
-from app.db import db
-from app.blueprint import register_routing
+
 import manage
+from app.blueprint import register_routing
+from app.db import db
+from app.extention import cors, migrate
+from app.utils.auth import jwt
+from app.utils.logging import configure_logging
+from app.utils.principal import principal
+
 
 def create_app(settings_module):
     app = Flask(__name__)
@@ -16,7 +19,7 @@ def create_app(settings_module):
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
-    cors.init_app(app, supports_credentials='true' ,resources={r"*": { "origins": "*" }})
+    cors.init_app(app, supports_credentials="true", resources={r"*": {"origins": "*"}})
     principal.init_app(app)
     manage.init_app(app)
 
@@ -28,5 +31,6 @@ def create_app(settings_module):
 
     return app
 
-settings_module = os.getenv('APP_SETTINGS_MODULE')
+
+settings_module = os.getenv("APP_SETTINGS_MODULE")
 app = create_app(settings_module)

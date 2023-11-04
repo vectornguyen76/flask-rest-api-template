@@ -1,5 +1,6 @@
 from app.db import db
-        
+
+
 class UserRoleModel(db.Model):
     __tablename__ = "user_role"
 

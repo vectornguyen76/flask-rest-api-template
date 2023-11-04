@@ -1,5 +1,6 @@
 from app.db import db
-        
+
+
 class RolePermissionModel(db.Model):
     __tablename__ = "role_permission"
 
