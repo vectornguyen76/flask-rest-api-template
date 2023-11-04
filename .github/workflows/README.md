@@ -7,8 +7,9 @@ File: [development_pipeline.yml](development_pipeline.yml)
 Event: On **Pull Request** → any branch into **develop**
 
 Jobs:
+
 - Build
-- Unit Test 
+- Unit Test
 
 ### Description:
 
@@ -19,6 +20,7 @@ File: [staging_pipeline.yml](staging_pipeline.yml)
 Event: On **Pull Request** → any branch into **staging**
 
 Jobs:
+
 - Build
 - Unit Test
 - Deploy
@@ -32,8 +34,9 @@ File: [production_pipeline.yml](production_pipeline.yml)
 Event: On **Pull Request** → any branch into **main**
 
 Jobs:
+
 - Build
-- Test 
+- Test
 - Deploy
 
 ### Description:

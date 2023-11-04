@@ -1,8 +1,11 @@
 import os
 import unittest
-from app.models import UserModel
-from app import db, create_app
+
 from passlib.hash import pbkdf2_sha256
+
+from app import create_app, db
+from app.models import UserModel
+
 
 class UsersUnitTests(unittest.TestCase):
     def setUp(self):
@@ -10,7 +13,9 @@ class UsersUnitTests(unittest.TestCase):
         This method runs once before any test in this class.
         It sets up the application context and creates the necessary database tables.
         """
-        self.app = create_app(settings_module=os.environ.get('APP_TEST_SETTINGS_MODULE'))
+        self.app = create_app(
+            settings_module=os.environ.get("APP_TEST_SETTINGS_MODULE")
+        )
         with self.app.app_context():
             db.create_all()
 
@@ -28,17 +33,18 @@ class UsersUnitTests(unittest.TestCase):
         Test case to check if creating a user is successful.
         """
         # Given
-        username = 'test_user'
-        password = "123456" 
+        username = "test_user"
+        password = "123456"
 
         # When
         with self.app.app_context():
             user = UserModel(username=username, password=pbkdf2_sha256.hash(password))
-            
+
         # Then
         # Assertions to check if the user object is created correctly
         self.assertEqual(username, user.username)
         self.assertTrue(pbkdf2_sha256.verify(password, user.password))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
