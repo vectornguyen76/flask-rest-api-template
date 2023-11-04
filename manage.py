@@ -4,7 +4,7 @@ import click
 import coverage
 from passlib.hash import pbkdf2_sha256
 
-from app import db
+from app.db import db
 from app.models import (
     PermissionModel,
     RoleModel,
