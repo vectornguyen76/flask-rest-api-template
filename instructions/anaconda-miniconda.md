@@ -12,7 +12,7 @@
   ```
 - Install the wget command:
   ```shell
-  apt-get install wget
+  sudo apt-get install wget
   ```
 
 ## Step 2: Install Anaconda or Miniconda
