@@ -33,6 +33,7 @@
   ```
 
 ### Install Miniconda - use the following commands consecutively
+
 - Download miniconda
   ```shell
   wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -41,7 +42,7 @@
   ```shell
   sha256sum Miniconda3-latest-Linux-x86_64.sh
   ```
-- The output will notify if any errors occurred. If there are no errors, move on to the actual installation step. To continue, run the Anaconda bash shell script: 
+- The output will notify if any errors occurred. If there are no errors, move on to the actual installation step. To continue, run the Anaconda bash shell script:
   ```shell
   bash Miniconda3-latest-Linux-x86_64.sh
   ```
