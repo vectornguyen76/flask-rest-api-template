@@ -15,10 +15,10 @@
     src: "/home/ubuntu/server/artifact.zip"
     dest: "/home/ubuntu/server"
 
-- name: Pull api image
+- name: Pull flask template image
   community.docker.docker_image:
-    name: "{{ api_image }}"
-    tag: "{{ api_tag }}"
+    name: "{{ flask_template_image }}"
+    tag: "{{ flask_template_tag }}"
     source: pull
 
 - name: Run docker compose
