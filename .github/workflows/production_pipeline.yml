@@ -4,9 +4,6 @@ on:
     branches:
       - master
 
-  push:
-    branches:
-      - master
 jobs:
   build-test:
     runs-on: ubuntu-latest

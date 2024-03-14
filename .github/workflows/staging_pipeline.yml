@@ -4,9 +4,6 @@ on:
     branches:
       - staging
 
-  push:
-    branches:
-      - staging
 jobs:
   build-test:
     runs-on: ubuntu-latest
