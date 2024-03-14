@@ -2,7 +2,7 @@ version: "3"
 services:
   api_service:
     container_name: api_container
-    image: api_image
+    image: vectornguyen76/flask_template_image
     build:
       context: .
       dockerfile: Dockerfile
@@ -15,20 +15,17 @@ services:
 
   db_service:
     container_name: db_container
-    image: postgres:13.3
+    image: postgres:14.1
     env_file:
       - .env.db.local
     ports:
-      - 8000:5432
+      - 5432:5432
     volumes:
       - postgresql_data:/var/lib/postgresql/data/
 
   nginx_service:
     container_name: nginx_container
     image: nginx:1.25.1-alpine
-    build:
-      context: ./server
-      dockerfile: Dockerfile
     ports:
       - 80:80
     volumes:

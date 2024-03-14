@@ -1,6 +1,10 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Creates EC2
+Description: Creates EC2 Server
 Parameters:
+  EnvironmentName:
+    Description: An environment name that will be prefixed to resource names
+    Type: String
+
   VpcCIDR:
     Description: "VPC range"
     Type: String
@@ -38,7 +42,7 @@ Resources:
       EnableDnsSupport: true
       Tags:
         - Key: Name
-          Value: "Main VPC"
+          Value: !Sub ${EnvironmentName} VPC
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
@@ -56,12 +60,12 @@ Resources:
   PublicSubnet:
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: "us-east-1a"
+      AvailabilityZone: !Select [0, !GetAZs ""]
       VpcId: !Ref VPC
       CidrBlock: !Ref PublicSubnetCIDR
       Tags:
         - Key: Name
-          Value: "Public Subnet AZ1"
+          Value: !Sub ${EnvironmentName} Public Subnet
 
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
@@ -88,13 +92,17 @@ Resources:
   SecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupName: mySecurityGroup
+      GroupName: !Sub ${EnvironmentName}-SecurityGroup
       GroupDescription: Allow http to client host
       VpcId: !Ref VPC
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
           ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
           FromPort: 22
@@ -108,18 +116,11 @@ Resources:
           FromPort: 3000
           ToPort: 3000
           CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 5040
-          ToPort: 5040
-          CidrIp: 0.0.0.0/0
       SecurityGroupEgress:
         - IpProtocol: "-1"
           FromPort: -1
           ToPort: -1
           CidrIp: 0.0.0.0/0
-      Tags:
-        - Key: Name
-          Value: SecurityGroup
 
   # Server EC2 Instance
   ServerInstance:
@@ -135,27 +136,12 @@ Resources:
             - !Ref SecurityGroup
           SubnetId: !Ref PublicSubnet
       BlockDeviceMappings:
-        - DeviceName: "/dev/sdk"
+        - DeviceName: "/dev/sda1"
           Ebs:
-            VolumeSize: 20
-      # UserData:
-      #   Fn::Base64: !Sub |
-      #     #!/bin/bash
-      #     sudo apt-get update -y
-      #     sudo apt-get install ca-certificates curl gnupg
-      #     sudo install -m 0755 -d /etc/apt/keyrings
-      #     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-      #     sudo chmod a+r /etc/apt/keyrings/docker.gpg
-      #     echo \
-      #     "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-      #     "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-      #     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-      #     sudo apt-get update -y
-      #     apt-get install -y docker-ce
-      #     docker run -p 80:8080 tomcat:8.0
+            VolumeSize: 50
       Tags:
         - Key: Name
-          Value: ServerInstance
+          Value: !Sub ${EnvironmentName}-Instance
 
 Outputs:
   EC2InstanceConnection:

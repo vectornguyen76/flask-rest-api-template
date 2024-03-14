@@ -1,42 +1,65 @@
-# Workflows
+# CI/CD Deploy
 
-## Development - Build and Unittest
+## Workflows
 
-File: [development_pipeline.yml](development_pipeline.yml)
+### Development - Build and Unittest
 
-Event: On **Pull Request** → any branch into **develop**
+#### File: [development_pipeline.yml](development_pipeline.yml)
 
-Jobs:
+**Event:** On Pull Request → any branch into develop
 
-- Build
-- Unit Test
+**Jobs:**
 
-### Description:
+- Install dependencies (caches)
+- Run isort
+- Run black
+- Run flake8
+- Build images (caches)
+- Push images to Docker Hub
 
-## Staging - CI/CD Pipeline
+**Description:**
+This workflow is triggered on Pull Requests into the develop branch. It ensures a clean and standardized codebase by installing dependencies, checking code formatting with isort, black, and flake8, and finally building and pushing Docker images to Docker Hub.
 
-File: [staging_pipeline.yml](staging_pipeline.yml)
+### Staging - CI/CD Pipeline
 
-Event: On **Pull Request** → any branch into **staging**
+#### File: [staging_pipeline.yml](staging_pipeline.yml)
 
-Jobs:
+**Event:** On Pull Request → any branch into staging
 
-- Build
-- Unit Test
-- Deploy
+**Jobs:**
 
-### Description:
+- Install dependencies (caches)
+- Run isort
+- Run black
+- Run flake8
+- Build images (caches)
+- Push images to Docker Hub
+- Create infrastructure
+- Configure infrastructure
+- Deploy application using Docker Compose
+- Clean up following the concept of A/B deploy
 
-## Production - CI/CD Pipeline
+**Description:**
+This pipeline is designed for the staging environment and is triggered on Pull Requests into the staging branch. It includes steps to ensure code quality, build and push Docker images, create and configure necessary infrastructure, and deploy the application using Docker Compose. The cleanup process follows the A/B deployment concept.
 
-File: [production_pipeline.yml](production_pipeline.yml)
+### Production - CI/CD Pipeline
 
-Event: On **Pull Request** → any branch into **main**
+#### File: [production_pipeline.yml](production_pipeline.yml)
 
-Jobs:
+**Event:** On Pull Request → any branch into master
 
-- Build
-- Test
-- Deploy
+**Jobs:**
 
-### Description:
+- Install dependencies (caches)
+- Run isort
+- Run black
+- Run flake8
+- Build images (caches)
+- Push images to Docker Hub
+- Create infrastructure
+- Configure infrastructure
+- Deploy application using Docker Compose
+- Clean up following the concept of A/B deploy
+
+**Description:**
+The production pipeline is triggered on Pull Requests into the master branch, indicating changes are ready for deployment to the production environment. It follows a similar process to the staging pipeline but is specifically tailored for the production environment. The cleanup process adheres to the A/B deployment concept, ensuring a smooth transition between versions.

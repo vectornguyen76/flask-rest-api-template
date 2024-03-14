@@ -1,5 +1,9 @@
 [
   {
+    "ParameterKey": "EnvironmentName",
+    "ParameterValue": "Search-Engine"
+  },
+  {
     "ParameterKey": "VpcCIDR",
     "ParameterValue": "10.0.0.0/16"
   },
@@ -12,7 +16,7 @@
     "ParameterValue": "t3.medium"
   },
   {
-    "ParameterKey": "KeyPair",
+    "ParameterKey": "KeyPairName",
     "ParameterValue": "my-keypair"
   },
   {

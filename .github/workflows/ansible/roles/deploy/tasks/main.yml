@@ -6,35 +6,23 @@
 
 - name: "Copy compressed app folder"
   copy:
-    src: "artifact-app.tar.gz"
-    dest: "/home/ubuntu/server/artifact-app.tar.gz"
+    src: "artifact.zip"
+    dest: "/home/ubuntu/server/artifact.zip"
 
 - name: "Extract app"
-  unarchive:
+  ansible.builtin.unarchive:
     remote_src: yes
-    src: "/home/ubuntu/server/artifact-app.tar.gz"
+    src: "/home/ubuntu/server/artifact.zip"
     dest: "/home/ubuntu/server"
 
-- name: Pull mlflow image
+- name: Pull api image
   community.docker.docker_image:
-    name: "{{ mlflow_image_name }}"
-    tag: "{{ mlflow_tag_name }}"
+    name: "{{ api_image }}"
+    tag: "{{ api_tag }}"
     source: pull
 
-- name: Pull model_predictor image
-  community.docker.docker_image:
-    name: "{{ model_predictor_image_name }}"
-    tag: "{{ model_predictor_tag_name }}"
-    source: pull
-
-- name: Run mlflow container
+- name: Run docker compose
   become: True
   shell:
     chdir: /home/ubuntu/server
-    cmd: "docker compose -f deployment/mlflow/docker-compose.yml up -d"
-
-- name: Run model_predictor container
-  become: True
-  shell:
-    chdir: /home/ubuntu/server
-    cmd: "bash deployment/deploy.sh deploy_run_predictor data/model_config/phase-1/prob-1/model-1.yml data/model_config/phase-1/prob-2/model-1.yml 5040"
+    cmd: "docker compose up -d"
