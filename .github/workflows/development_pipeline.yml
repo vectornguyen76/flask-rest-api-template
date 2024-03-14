@@ -47,41 +47,21 @@ jobs:
           DATABASE_TEST_URL: postgresql://db_user:db_password@localhost/db_test
         run: python -m flask tests
 
-  deploy-service:
-    needs: build-test
-    runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: "us-east-1"
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
       - name: Login to Docker Hub
         id: docker_hub_auth
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build Docker Image
-        id: build_docker
-        run: |
-          docker compose build api_service
-
-          # Add tag
-          docker tag api_image:latest ${{ secrets.DOCKERHUB_USERNAME }}/api_image:latest
-
-      - name: Push Docker Image
-        id: push_images
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/api_image:latest
-
-      - name: Deploy to AWS CloudFormation
-        uses: aws-actions/aws-cloudformation-github-deploy@v1
+      - name: Build and push
+        uses: docker/build-push-action@v4
         with:
-          name: MyStackEC2
-          template: myStack.yaml
-          parameter-overrides: "MyParam1=myValue,MyParam2=${{ secrets.MY_SECRET_VALUE }}"
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask_template_image:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
