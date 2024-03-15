@@ -1,10 +1,10 @@
 {
   "info": {
     "_postman_id": "03bd1377-f65e-4a5d-b478-2af9d4f41f18",
-    "name": "Template REST API",
+    "name": "FlaskTemplate",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "20498029",
-    "_collection_link": "https://dark-escape-873868.postman.co/workspace/My-Workspace~fd59678e-5c9a-4e36-8407-3c2ba6dcae38/collection/20498029-03bd1377-f65e-4a5d-b478-2af9d4f41f18?action=share&creator=20498029&source=collection_link"
+    "_collection_link": "https://dark-escape-873868.postman.co/workspace/My-Workspace~fd59678e-5c9a-4e36-8407-3c2ba6dcae38/collection/20498029-03bd1377-f65e-4a5d-b478-2af9d4f41f18?action=share&source=collection_link&creator=20498029"
   },
   "item": [
     {
@@ -240,7 +240,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"username\": \"member\",\r\n    \"password\": \"123456\"\r\n}",
+              "raw": "{\r\n  \"email\": \"phuoc@gmail.com\",\r\n  \"password\": \"Phuoc12345@\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -248,9 +248,9 @@
               }
             },
             "url": {
-              "raw": "{{HOST}}/register",
+              "raw": "{{HOST}}/auth/users",
               "host": ["{{HOST}}"],
-              "path": ["register"]
+              "path": ["auth", "users"]
             }
           },
           "response": []

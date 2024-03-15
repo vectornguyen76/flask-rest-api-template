@@ -1,3 +1,5 @@
+import logging
+
 from flask_smorest import abort
 from sqlalchemy import asc
 
@@ -6,6 +8,9 @@ from app.models.permission_model import PermissionModel
 from app.models.role_model import RoleModel
 from app.models.role_permission_model import RolePermissionModel
 from app.models.user_role_model import UserRoleModel
+
+# Create logger for this module
+logger = logging.getLogger(__name__)
 
 
 def get_all_role():
@@ -29,6 +34,7 @@ def post_role(role_data):
         db.session.commit()
     except Exception as ex:
         db.session.rollback()
+        logger.error(f"Can not add role! Error: {ex}")
         abort(400, message=f"Can not add role! Error: {ex}")
 
     return {"message": "Add successfully!"}
@@ -43,6 +49,7 @@ def update_role(role_data, role_id):
     role = RoleModel.query.filter_by(id=role_id).first()
 
     if not role:
+        logger.error("role doesn't exist, cannot update!")
         abort(400, message="role doesn't exist, cannot update!")
 
     # Updete role
@@ -63,6 +70,7 @@ def update_role(role_data, role_id):
         db.session.commit()
     except Exception as ex:
         db.session.rollback()
+        logger.error(f"Can not update role! Error: {ex}")
         abort(400, message=f"Can not update role! Error: {ex}")
 
     return {"message": "Update successfully!"}
@@ -74,6 +82,7 @@ def delete_role(role_id):
     role = RoleModel.query.filter_by(id=role_id).delete()
 
     if not role:
+        logger.error("Role doesn't exist, cannot delete!")
         abort(400, message="Role doesn't exist, cannot delete!")
 
     db.session.commit()

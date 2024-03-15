@@ -1,8 +1,11 @@
 from marshmallow import Schema, fields
 
+from app.schemas.permission_schema import PlainPermissionSchema
+from app.schemas.role_schema import PlainRoleSchema
+
 
 class PlainUserSchema(Schema):
-    # Dump only: chỉ read
+    # Dump only: only read
     id = fields.Str(dump_only=True)
     username = fields.Str(required=True)
     password = fields.Str(required=True)
@@ -15,29 +18,8 @@ class UserUpdateSchema(Schema):
     roles = fields.List(cls_or_instance=fields.Int, required=True)
 
 
-class PlainPermissionSchema(Schema):
-    id = fields.Int(dump_only=True)
-    name = fields.Str(required=True)
-    route = fields.Str(required=True)
-
-
-class PlainRoleSchema(Schema):
-    id = fields.Int(dump_only=True)
-    name = fields.Str(required=True)
-    description = fields.Str(required=True)
-    permissions = fields.List(fields.Nested(PlainPermissionSchema()), dump_only=True)
-
-
-class RoleSchema(PlainRoleSchema):
-    users = fields.List(fields.Nested(PlainUserSchema()), dump_only=True)
-
-
 class UserSchema(PlainUserSchema):
     block = fields.Bool(dump_only=True)
-    roles = fields.List(fields.Nested(PlainRoleSchema()), dump_only=True)
-
-
-class PermissionSchema(PlainPermissionSchema):
     roles = fields.List(fields.Nested(PlainRoleSchema()), dump_only=True)
 
 
@@ -59,20 +41,14 @@ class UserPageSchema(Schema):
 
 class UserAndRoleSchema(Schema):
     message = fields.Str()
-    user = fields.Nested(UserSchema)
-    role = fields.Nested(RoleSchema)
+    user = fields.Nested(PlainUserSchema)
+    role = fields.Nested(PlainRoleSchema)
 
 
 class RoleAndPermissionSchema(Schema):
     message = fields.Str()
-    role = fields.Nested(RoleSchema)
-    permission = fields.Nested(PermissionSchema)
-
-
-class GetRolePermissionSchema(Schema):
-    id = fields.Int(dump_only=True)
-    role_id = fields.Int(dump_only=True)
-    permission_id = fields.Int(dump_only=True)
+    role = fields.Nested(PlainRoleSchema)
+    permission = fields.Nested(PlainPermissionSchema)
 
 
 class UpdateUserRoleSchema(Schema):
@@ -81,14 +57,6 @@ class UpdateUserRoleSchema(Schema):
 
 class UpdateBlockUserSchema(Schema):
     block = fields.Bool(required=True)
-
-
-class UpdateRolePermissionSchema(PlainRoleSchema):
-    permissions = fields.List(cls_or_instance=fields.Int, required=True)
-
-
-class UpdatePermissionRoleSchema(Schema):
-    data_update = fields.Dict(required=True)
 
 
 class CheckUserExistsSchema(Schema):
