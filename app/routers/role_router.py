@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required
 from flask_principal import Permission, RoleNeed
 from flask_smorest import Blueprint
 
-from app.schemas.user_schema import RoleSchema, UpdateRolePermissionSchema
+from app.schemas.role_schema import RoleSchema, UpdateRolePermissionSchema
 from app.services import role_service
 
 # Define permissions
