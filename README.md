@@ -100,19 +100,23 @@ Development environment that uses PostgreSQL in local and uses the server flask 
 3. Create or update **.env** file and enter the environment variables of the environment. Example:
 
    ```shell
-    # APP configuration
-    APP_NAME="Flask API Rest Template"
-    APP_ENV="develop"
+   # APP configuration
+   APP_NAME="Flask API Rest Template"
+   APP_ENV="develop"
 
-    # Flask Configuration
-    FLASK_APP= "app:app"
-    FLASK_DEBUG="true"
-    APP_SETTINGS_MODULE="config.DevelopConfig"
-    FLASK_RUN_HOST="0.0.0.0"
-    FLASK_RUN_PORT="5000"
+   # Flask Configuration
+   FLASK_APP= "app:app"
+   FLASK_DEBUG="true"
+   APP_SETTINGS_MODULE="config.DevelopConfig"
+   FLASK_RUN_HOST="0.0.0.0"
+   FLASK_RUN_PORT="5000"
 
-    # Database service configuration
-    DATABASE_URL="postgresql://db_user:db_password@localhost/db_dev"
+   # Secret key
+   SECRET_KEY=<your-secret-key>
+   JWT_SECRET_KEY=<your-jwt-secret-key>
+
+   # Database service configuration
+   DATABASE_URL="postgresql://db_user:db_password@localhost/db_dev"
    ```
 
 4. Run:
@@ -182,19 +186,23 @@ Testing environment that uses PostgreSQL as database (db_test) and performs unit
 3. Create or update **.env** file and enter the environment variables of the environment. Example:
 
    ```shell
-    # APP configuration
-    APP_NAME="Flask API Rest Template"
-    APP_ENV="testing"
+   # APP configuration
+   APP_NAME="Flask API Rest Template"
+   APP_ENV="testing"
 
-    # Flask Configuration
-    FLASK_APP= "app:app"
-    FLASK_DEBUG="true"
-    APP_SETTINGS_MODULE="config.TestingConfig"
-    FLASK_RUN_HOST="0.0.0.0"
-    FLASK_RUN_PORT="3000"
+   # Flask Configuration
+   FLASK_APP= "app:app"
+   FLASK_DEBUG="true"
+   APP_SETTINGS_MODULE="config.TestingConfig"
+   FLASK_RUN_HOST="0.0.0.0"
+   FLASK_RUN_PORT="3000"
 
-    # Database service configuration
-    DATABASE_TEST_URL="postgresql://db_user:db_password@localhost/db_test"
+   # Secret key
+   SECRET_KEY=<your-secret-key>
+   JWT_SECRET_KEY=<your-jwt-secret-key>
+
+   # Database service configuration
+   DATABASE_TEST_URL="postgresql://db_user:db_password@localhost/db_test"
    ```
 
 4. Init database:
@@ -276,6 +284,10 @@ Containerized services separately with PostgreSQL databases (db), API (api) and 
       POSTGRES_USER=<name_user> # For example db_user
       PGPASSWORD=<password_user> # For example db_password
 
+      # Secret key
+      SECRET_KEY=<your-secret-key>
+      JWT_SECRET_KEY=<your-jwt-secret-key>
+
       DATABASE_TEST_URL=<url database test> # For example postgresql+psycopg2://db_user:db_password@db_service:5432/db_test
       DATABASE_URL=<url database> # For example postgresql+psycopg2://db_user:db_password@db_service:5432/db_dev
       ```
@@ -318,6 +330,10 @@ Apply CI/CD with Github Actions to automatically deployed to AWS platform use EC
 
       # API service configuration
       API_HOST=<api_host> # For example 0.0.0.0
+
+      # Secret key
+      SECRET_KEY=<your-secret-key>
+      JWT_SECRET_KEY=<your-jwt-secret-key>
 
       # Database service configuration
       DATABASE_URL=<url_database> # For example sqlite:///production.db
@@ -400,7 +416,7 @@ Apply CI/CD with Github Actions to automatically deployed to AWS platform use EC
 ## Swagger
 
 ```
-http://localhost:port/swagger-ui
+http://localhost:<port>/swagger-ui
 ```
 
 ## Reference

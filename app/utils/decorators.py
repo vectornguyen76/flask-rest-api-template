@@ -12,22 +12,21 @@ logger = logging.getLogger(__name__)
 
 
 def permission_required(permission_name):
-    def decorator_function(original_function):
-        @wraps(original_function)
-        def wrapper_function(*arg, **kwargs):
+    def decorator(func):
+        def wrapper(*arg, **kwargs):
             jwt_data = get_jwt()
             user_id = jwt_data["sub"]
             user = UserModel.query.filter_by(id=user_id).first()
             for role in user.roles:
                 for permission in role.permissions:
                     if permission.name == permission_name:
-                        return original_function(*arg, **kwargs)
-            logger.error("User does not have permission to access this api!")
-            abort(403, message="User does not have permission to access this api!")
+                        return func(*arg, **kwargs)
+            logger.error("User does not have permission to access this API!")
+            abort(403, message="User does not have permission to access this API!")
 
-        return wrapper_function
+        return wrapper
 
-    return decorator_function
+    return decorator
 
 
 def time_profiling(func):
