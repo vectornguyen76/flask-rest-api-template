@@ -1,13 +1,11 @@
-from datetime import datetime
+import logging
 
-from flask import current_app
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
     get_jwt,
     get_jwt_identity,
 )
-from flask_principal import Identity, identity_changed
 from flask_smorest import abort
 from passlib.hash import pbkdf2_sha256
 from sqlalchemy import asc
@@ -18,7 +16,8 @@ from app.models.role_model import RoleModel
 from app.models.user_model import UserModel
 from app.services import user_role_service
 
-DEFAULT_ROLE = 3
+# Create logger for this module
+logger = logging.getLogger(__name__)
 
 
 def get_all_user():
@@ -34,6 +33,7 @@ def get_user(user_id):
 def update_user(user_data, user_id):
     user = UserModel.query.filter_by(id=user_id).first()
     if not user:
+        logger.error("User doesn't exist, cannot update!")
         abort(400, message="User doesn't exist, cannot update!")
 
     try:
@@ -55,6 +55,7 @@ def update_user(user_data, user_id):
         db.session.commit()
     except Exception as ex:
         db.session.rollback()
+        logger.error(f"Can not update! Error: {ex}")
         abort(400, message=f"Can not update! Error: {ex}")
 
     return {"message": "Update successfully!"}
@@ -64,14 +65,17 @@ def update_block_user(user_data, user_id):
     # Only admin can delete user
     jwt = get_jwt()
     if not jwt.get("is_admin"):
+        logger.error("Admin privilege requierd.")
         abort(401, message="Admin privilege requierd.")
 
     if user_id == 1:
+        logger.error("Can not block Super Admin!")
         abort(401, message="Can not block Super Admin!")
 
     user = UserModel.query.filter_by(id=user_id).first()
 
     if not user:
+        logger.error("User doesn't exist, cannot update!")
         abort(400, message="User doesn't exist, cannot update!")
 
     try:
@@ -82,6 +86,7 @@ def update_block_user(user_data, user_id):
         db.session.commit()
     except Exception as ex:
         db.session.rollback()
+        logger.error(f"Can not update status block User! Error: {ex}")
         abort(400, message=f"Can not update status block User! Error: {ex}")
 
     return {"message": "Block successfully!"}
@@ -91,10 +96,12 @@ def delete_user(id):
     # Only admin can delete user
     jwt = get_jwt()
     if not jwt.get("is_admin"):
+        logger.error("Admin privilege requierd.")
         abort(401, message="Admin privilege requierd.")
 
     result = UserModel.query.filter_by(id=id).delete()
     if not result:
+        logger.error("User doesn't exist, cannot delete!")
         abort(400, message="User doesn't exist, cannot delete!")
 
     db.session.commit()
@@ -113,12 +120,9 @@ def login_user(user_data):
         # Create refresh_token
         refresh_token = create_refresh_token(identity=user.id)
 
-        # Set the user identity to the role
-        identity = Identity(user.id)
-        identity_changed.send(current_app._get_current_object(), identity=identity)
-
         return {"access_token": access_token, "refresh_token": refresh_token}
 
+    logger.error("Invalid credentials.")
     abort(401, message="Invalid credentials.")
 
 
@@ -129,6 +133,7 @@ def register_user(user_data):
     # Check user name exist
     user = UserModel.query.filter(UserModel.username == user_data["username"]).first()
     if user:
+        logger.error("Username already exists.")
         abort(400, message="Username already exists.")
 
     # Hash password
@@ -142,13 +147,15 @@ def register_user(user_data):
 
     except Exception as ex:
         db.session.rollback()
+        logger.error(f"Can not register! Error: {ex}")
         abort(400, message=f"Can not register! Error: {ex}")
 
     try:
         # Add default role for user
-        user_role_service.link_roles_to_user(user_id=new_user.id, role_id=DEFAULT_ROLE)
+        user_role_service.link_roles_to_user(user_id=new_user.id, role_id=3)
 
     except Exception as ex:
+        logger.error(f"Can not register! - Can not add role default. Error: {ex}")
         abort(400, message=f"Can not register! - Can not add role default. Error: {ex}")
 
     return {"message": "Register successfully!"}
@@ -182,4 +189,5 @@ def add_jti_blocklist(jti):
         db.session.commit()
     except Exception as ex:
         db.session.rollback()
+        logger.error(f"Can not add jti! Error: {ex}")
         abort(400, message=f"Can not add jti! Error: {ex}")

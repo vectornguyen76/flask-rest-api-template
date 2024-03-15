@@ -1,8 +1,13 @@
+import logging
+
 from flask_smorest import abort
 from sqlalchemy import asc
 
 from app.db import db
 from app.models.permission_model import PermissionModel
+
+# Create logger for this module
+logger = logging.getLogger(__name__)
 
 
 def get_all_permission():
@@ -21,6 +26,7 @@ def post_permission(permission_data):
         db.session.commit()
     except Exception as ex:
         db.session.rollback()
+        logger.error(f"Can not add permission! Error: {ex}")
         abort(400, message=f"Can not add permission! Error: {ex}")
 
     return {"message": "Add successfully!"}
@@ -35,6 +41,7 @@ def update_permission(permission_data, permission_id):
     permission = PermissionModel.query.filter_by(id=permission_id).first()
 
     if not permission:
+        logger.error("permission doesn't exist, cannot update!")
         abort(400, message="permission doesn't exist, cannot update!")
 
     try:
@@ -47,6 +54,7 @@ def update_permission(permission_data, permission_id):
         db.session.commit()
     except Exception as ex:
         db.session.rollback()
+        logger.error(f"Can not update permission! Error: {ex}")
         abort(400, message=f"Can not update permission! Error: {ex}")
 
     return {"message": "Update successfully!"}
