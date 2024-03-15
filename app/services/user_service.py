@@ -1,13 +1,11 @@
 import logging
 
-from flask import current_app
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
     get_jwt,
     get_jwt_identity,
 )
-from flask_principal import Identity, identity_changed
 from flask_smorest import abort
 from passlib.hash import pbkdf2_sha256
 from sqlalchemy import asc
@@ -121,10 +119,6 @@ def login_user(user_data):
 
         # Create refresh_token
         refresh_token = create_refresh_token(identity=user.id)
-
-        # Set the user identity to the role
-        identity = Identity(user.id)
-        identity_changed.send(current_app._get_current_object(), identity=identity)
 
         return {"access_token": access_token, "refresh_token": refresh_token}
 

@@ -1,15 +1,10 @@
 from flask.views import MethodView
 from flask_jwt_extended import get_jwt, jwt_required
-from flask_principal import Permission, RoleNeed
 from flask_smorest import Blueprint
 
 from app.schemas.user_schema import UpdateBlockUserSchema, UserSchema, UserUpdateSchema
 from app.services import user_service
-
-# Define permissions
-read_permission = Permission(RoleNeed("read"))
-write_permission = Permission(RoleNeed("write"))
-delete_permission = Permission(RoleNeed("delete"))
+from app.utils.decorators import permission_required
 
 blp = Blueprint("User", __name__, description="User API")
 
@@ -17,7 +12,7 @@ blp = Blueprint("User", __name__, description="User API")
 @blp.route("/user")
 class UserList(MethodView):
     @jwt_required()
-    @read_permission.require(http_exception=403)
+    @permission_required(permission_name="read")
     @blp.response(200, UserSchema(many=True))
     def get(self):
         result = user_service.get_all_user()
@@ -27,14 +22,14 @@ class UserList(MethodView):
 @blp.route("/user/<int:user_id>")
 class User(MethodView):
     @jwt_required()
-    @read_permission.require(http_exception=403)
+    @permission_required(permission_name="read")
     @blp.response(200, UserSchema)
     def get(self, user_id):
         result = user_service.get_user(user_id)
         return result
 
     @jwt_required()
-    @write_permission.require(http_exception=403)
+    @permission_required(permission_name="write")
     @blp.arguments(UserUpdateSchema)
     def put(self, user_data, user_id):
         result = user_service.update_user(user_data, user_id)
@@ -44,7 +39,7 @@ class User(MethodView):
 @blp.route("/block-user/<int:user_id>")
 class BlockUser(MethodView):
     @jwt_required()
-    @delete_permission.require(http_exception=403)
+    @permission_required(permission_name="delete")
     @blp.arguments(UpdateBlockUserSchema)
     def put(self, user_data, user_id):
         result = user_service.update_block_user(user_data, user_id)

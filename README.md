@@ -30,7 +30,7 @@ Rest API template developed in Python with the Flask framework. The template cov
 - **ORM:** Flask-sqlalchemy
 - **Swagger:** Swagger-UI
 - **Authentication:** Flask Json Web Token
-- **Permission:** Flask Principal
+- **Permission:** JWT Decorator
 - **Serialization, Deserialization and Validation:** Marshmallow
 - **Migration Database:** Flask-migrate
 - **Environment manager:** Anaconda/Miniconda
