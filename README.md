@@ -99,6 +99,12 @@ Development environment that uses PostgreSQL in local and uses the server flask 
 
 3. Create or update **.env** file and enter the environment variables of the environment. Example:
 
+   Generate Secret key:
+
+   ```
+   openssl rand -hex 32
+   ```
+
    ```shell
    # APP configuration
    APP_NAME="Flask API Rest Template"
@@ -184,6 +190,11 @@ Testing environment that uses PostgreSQL as database (db_test) and performs unit
    ```
 
 3. Create or update **.env** file and enter the environment variables of the environment. Example:
+   Generate Secret key:
+
+   ```
+   openssl rand -hex 32
+   ```
 
    ```shell
    # APP configuration
