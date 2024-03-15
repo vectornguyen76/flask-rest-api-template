@@ -1,11 +1,11 @@
 from marshmallow import Schema, fields
 
-from app.schemas.permission_schema import PermissionSchema
-from app.schemas.role_schema import PlainRoleSchema, RoleSchema
+from app.schemas.permission_schema import PlainPermissionSchema
+from app.schemas.role_schema import PlainRoleSchema
 
 
 class PlainUserSchema(Schema):
-    # Dump only: chỉ read
+    # Dump only: only read
     id = fields.Str(dump_only=True)
     username = fields.Str(required=True)
     password = fields.Str(required=True)
@@ -41,14 +41,14 @@ class UserPageSchema(Schema):
 
 class UserAndRoleSchema(Schema):
     message = fields.Str()
-    user = fields.Nested(UserSchema)
-    role = fields.Nested(RoleSchema)
+    user = fields.Nested(PlainUserSchema)
+    role = fields.Nested(PlainRoleSchema)
 
 
 class RoleAndPermissionSchema(Schema):
     message = fields.Str()
-    role = fields.Nested(RoleSchema)
-    permission = fields.Nested(PermissionSchema)
+    role = fields.Nested(PlainRoleSchema)
+    permission = fields.Nested(PlainPermissionSchema)
 
 
 class UpdateUserRoleSchema(Schema):
