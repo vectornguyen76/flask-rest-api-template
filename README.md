@@ -44,7 +44,7 @@ Rest API template developed in Python with the Flask framework. The template cov
 
 ## Requirements
 
-- [Python 3.9](https://www.python.org/downloads/)
+- [Python 3.10](https://www.python.org/downloads/)
 - [Anaconda/Miniconda](instructions/anaconda-miniconda.md)
 - [Docker](instructions/docker-dockercompose.md)
 - [Docker-Compose v2.10.2](instructions/docker-dockercompose.md)
@@ -58,7 +58,7 @@ Development environment that uses PostgreSQL in local and uses the server flask 
 
 1. Create environment and install packages:
    ```shell
-   conda create -n backend python=3.9
+   conda create -n backend python=3.10
    ```
    ```shell
    conda activate backend
@@ -66,7 +66,7 @@ Development environment that uses PostgreSQL in local and uses the server flask 
    ```shell
    pip install -r requirements.txt
    ```
-2. Create PosgresSQL on Ubuntu 20.04
+2. Create PosgresSQL on Ubuntu
    Install PosgresSQL
 
    ```shell
@@ -150,7 +150,7 @@ Testing environment that uses PostgreSQL as database (db_test) and performs unit
 
 1. Create environment and install packages:
    ```shell
-   conda create -n backend python=3.9
+   conda create -n backend python=3.10
    ```
    ```shell
    conda activate backend
@@ -158,7 +158,7 @@ Testing environment that uses PostgreSQL as database (db_test) and performs unit
    ```shell
    pip install -r requirements.txt
    ```
-2. Create PosgresSQL on Ubuntu 20.04
+2. Create PosgresSQL on Ubuntu
    Install PosgresSQL
 
    ```shell
@@ -434,6 +434,7 @@ http://localhost:<port>/swagger-ui
 
 - [Udemy - REST APIs with Flask and Python in 2023](https://www.udemy.com/course/rest-api-flask-and-python/)
 - [Github - Flask API REST Template](https://github.com/igp7/flask-rest-api-template)
+- [](https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker)
 
 ## Contribution
 

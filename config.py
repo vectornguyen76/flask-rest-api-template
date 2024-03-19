@@ -1,6 +1,5 @@
 import datetime
 import os
-import secrets
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -35,7 +34,7 @@ class DefaultConfig:
     JWT_TOKEN_LOCATION = "headers"
 
     # Config API documents
-    API_TITLE = "Template REST API"
+    API_TITLE = "Flask REST API Template"
     API_VERSION = "v1"
     OPENAPI_VERSION = "3.0.3"
     OPENAPI_URL_PREFIX = "/"
