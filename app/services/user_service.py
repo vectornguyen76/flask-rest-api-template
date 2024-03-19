@@ -120,6 +120,8 @@ def login_user(user_data):
         # Create refresh_token
         refresh_token = create_refresh_token(identity=user.id)
 
+        logger.info(f"User login successfully! user_name: {user_data['username']}")
+
         return {"access_token": access_token, "refresh_token": refresh_token}
 
     logger.error("Invalid credentials.")

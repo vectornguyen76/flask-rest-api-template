@@ -29,7 +29,7 @@ if [ "$APP_ENV" = "local" ]; then
     echo "Done init user-admin"
 
     echo "Run app with gunicorn server..."
-    gunicorn --bind $API_HOST:$API_PORT $API_ENTRYPOINT --timeout 10 --workers 4;
+    gunicorn -c ./gunicorn/gunicorn_config.py $API_ENTRYPOINT;
 fi
 
 if [ "$APP_ENV" = "production" ]; then
