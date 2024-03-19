@@ -434,7 +434,7 @@ http://localhost:<port>/swagger-ui
 
 - [Udemy - REST APIs with Flask and Python in 2023](https://www.udemy.com/course/rest-api-flask-and-python/)
 - [Github - Flask API REST Template](https://github.com/igp7/flask-rest-api-template)
-- [](https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker)
+- [Github - Uvicorn Gunicorn Fastapi Docker](https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker)
 
 ## Contribution
 
