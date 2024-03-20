@@ -17,7 +17,7 @@
   },
   {
     "ParameterKey": "KeyPairName",
-    "ParameterValue": "my-keypair"
+    "ParameterValue": "vectornguyen-keypair"
   },
   {
     "ParameterKey": "AMItoUse",
