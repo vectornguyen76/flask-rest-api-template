@@ -1,7 +1,7 @@
 [
   {
     "ParameterKey": "EnvironmentName",
-    "ParameterValue": "Search-Engine"
+    "ParameterValue": "Flask-Template"
   },
   {
     "ParameterKey": "VpcCIDR",
@@ -13,11 +13,11 @@
   },
   {
     "ParameterKey": "InstanceType",
-    "ParameterValue": "t3.medium"
+    "ParameterValue": "t3.micro"
   },
   {
     "ParameterKey": "KeyPairName",
-    "ParameterValue": "my-keypair"
+    "ParameterValue": "vectornguyen-keypair"
   },
   {
     "ParameterKey": "AMItoUse",

@@ -354,9 +354,23 @@ Apply CI/CD with Github Actions to automatically deployed to AWS platform use EC
       ```
 
 2. Create _Secrets_ on Github:
+
    1. **AWS_ACCESS_KEY_ID**: access token
    2. **AWS_SECRET_ACCESS_KEY**: secret access
-   3. **AWS_DEFAULT_REGION**: region
+   3. **SSH_PRIVATE_KEY**: ssh key pair
+   4. **DOCKERHUB_USERNAME**: ssh key pair
+   5. **DOCKERHUB_PASSWORD**: ssh key pair
+
+3. Create _Variables_ on Github:
+
+   1. **TAGS**: Tag for resources
+
+      Example:
+
+      ```
+      [{ "Key": "ApplicationName", "Value": "Template_Application" },
+      { "Key": "Creator", "Value": "VectorNguyen" }]
+      ```
 
 ## Flask Commands
 
@@ -434,7 +448,7 @@ http://localhost:<port>/swagger-ui
 
 - [Udemy - REST APIs with Flask and Python in 2023](https://www.udemy.com/course/rest-api-flask-and-python/)
 - [Github - Flask API REST Template](https://github.com/igp7/flask-rest-api-template)
-- [](https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker)
+- [Github - Uvicorn Gunicorn Fastapi Docker](https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker)
 
 ## Contribution
 
