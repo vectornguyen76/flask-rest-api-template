@@ -25,7 +25,7 @@ Rest API template developed in Python with the Flask framework. The template cov
 
 ## Technology
 
-- **Operating System:** Ubuntu 20.04
+- **Operating System:** Ubuntu
 - **Web Framework:** Flask
 - **ORM:** Flask-sqlalchemy
 - **Swagger:** Swagger-UI
@@ -44,10 +44,10 @@ Rest API template developed in Python with the Flask framework. The template cov
 
 ## Requirements
 
-- [Python 3.10](https://www.python.org/downloads/)
+- [Python](https://www.python.org/downloads/)
 - [Anaconda/Miniconda](instructions/anaconda-miniconda.md)
 - [Docker](instructions/docker-dockercompose.md)
-- [Docker-Compose v2.10.2](instructions/docker-dockercompose.md)
+- [Docker-Compose](instructions/docker-dockercompose.md)
 - [Github](https://github.com)
 
 ## Environments
@@ -56,222 +56,153 @@ Rest API template developed in Python with the Flask framework. The template cov
 
 Development environment that uses PostgreSQL in local and uses the server flask in debug mode.
 
-1. Create environment and install packages:
-   ```shell
-   conda create -n backend python=3.10
-   ```
-   ```shell
-   conda activate backend
-   ```
-   ```shell
-   pip install -r requirements.txt
-   ```
-2. Create PosgresSQL on Ubuntu
-   Install PosgresSQL
+1. **Create environment and install packages**
 
-   ```shell
-   sudo apt-get install postgresql-12
-   ```
+```shell
+conda create -n backend python=3.10
 
-   Go in PosgresSQL
+conda activate backend
 
-   ```shell
-   sudo -u postgres psql
-   ```
+pip install -r requirements.txt
+```
 
-   Create user and password
+2. **Create PosgresSQL on Ubuntu**
 
-   ```shell
-   CREATE USER db_user WITH PASSWORD 'db_password';
-   ```
+```shell
+# Install PosgresSQL
+sudo apt-get install postgresql-12
 
-   Create Database dev
+# Access to PosgresSQL
+sudo -u postgres psql
 
-   ```shell
-   CREATE DATABASE db_dev;
-   ```
+# Create user and password
+CREATE USER db_user WITH PASSWORD 'db_password';
 
-   Add permission User to Database
+# Create Database dev
+CREATE DATABASE db_dev;
 
-   ```shell
-   GRANT ALL PRIVILEGES ON DATABASE db_dev TO db_user;
-   ```
+# Add permission User to Database
+GRANT ALL PRIVILEGES ON DATABASE db_dev TO db_user;
+```
 
-3. Create or update **.env** file and enter the environment variables of the environment. Example:
+3. **Create or update `.env` file**
 
-   Generate Secret key:
+```shell
+# APP configuration
+APP_NAME=Flask API Rest Template
+APP_ENV=develop
 
-   ```
-   openssl rand -hex 32
-   ```
+# Flask Configuration
+FLASK_APP=app:app
+FLASK_DEBUG=true
+APP_SETTINGS_MODULE=config.DevelopConfig
+FLASK_RUN_HOST=0.0.0.0
+FLASK_RUN_PORT=5000
 
-   ```shell
-   # APP configuration
-   APP_NAME="Flask API Rest Template"
-   APP_ENV="develop"
+# Secret key
+SECRET_KEY=<your-secret-key>
+JWT_SECRET_KEY=<your-jwt-secret-key>
 
-   # Flask Configuration
-   FLASK_APP= "app:app"
-   FLASK_DEBUG="true"
-   APP_SETTINGS_MODULE="config.DevelopConfig"
-   FLASK_RUN_HOST="0.0.0.0"
-   FLASK_RUN_PORT="5000"
+# Database service configuration
+DATABASE_URL=postgresql://db_user:db_password@localhost/db_dev
+```
 
-   # Secret key
-   SECRET_KEY=<your-secret-key>
-   JWT_SECRET_KEY=<your-jwt-secret-key>
+4. **Run application**
 
-   # Database service configuration
-   DATABASE_URL="postgresql://db_user:db_password@localhost/db_dev"
-   ```
+```shell
+# Create database
+flask create-db
 
-4. Run:
-   Create Database
+# Create user admin
+flask create-user-admin
 
-   ```shell
-   flask create-db
-   ```
-
-   Create User Admin
-
-   ```shell
-   flask create-user-admin
-   ```
-
-   Run a development server
-
-   ```shell
-   flask run
-   ```
+# Run a development server
+flask run
+```
 
 ### Testing
 
 Testing environment that uses PostgreSQL as database (db_test) and performs unit tests, integration tests and API tests.
 
-1. Create environment and install packages:
-   ```shell
-   conda create -n backend python=3.10
-   ```
-   ```shell
-   conda activate backend
-   ```
-   ```shell
-   pip install -r requirements.txt
-   ```
-2. Create PosgresSQL on Ubuntu
-   Install PosgresSQL
+1. **Create test environment**
 
-   ```shell
-   sudo apt-get install postgresql-12
-   ```
+2. **Create Test Database**
 
-   Go in PosgresSQL
+3. **Create or update `.env` file**
 
-   ```shell
-   sudo -u postgres psql
-   ```
+```shell
+# APP configuration
+APP_NAME=Flask API Rest Template
+APP_ENV=testing
 
-   Create user and password
+# Flask Configuration
+FLASK_APP=app:app
+FLASK_DEBUG=true
+APP_SETTINGS_MODULE=config.TestingConfig
+FLASK_RUN_HOST=0.0.0.0
+FLASK_RUN_PORT=3000
 
-   ```shell
-   CREATE USER db_user WITH PASSWORD 'db_password';
-   ```
+# Secret key
+SECRET_KEY=<your-secret-key>
+JWT_SECRET_KEY=<your-jwt-secret-key>
 
-   Create Database test
+# Database service configuration
+DATABASE_TEST_URL=postgresql://db_user:db_password@localhost/db_test
+```
 
-   ```shell
-   CREATE DATABASE db_test;
-   ```
+4. **Init database**
 
-   Add permission User to Database
+```shell
+# Create database
+flask create-db
 
-   ```shell
-   GRANT ALL PRIVILEGES ON DATABASE db_test TO db_user;
-   ```
+# Create user admin
+flask create-user-admin
+```
 
-3. Create or update **.env** file and enter the environment variables of the environment. Example:
-   Generate Secret key:
+5. **Run all the tests**
 
-   ```
-   openssl rand -hex 32
-   ```
+```shell
+flask tests
+```
 
-   ```shell
-   # APP configuration
-   APP_NAME="Flask API Rest Template"
-   APP_ENV="testing"
+6. **Run unit tests**
 
-   # Flask Configuration
-   FLASK_APP= "app:app"
-   FLASK_DEBUG="true"
-   APP_SETTINGS_MODULE="config.TestingConfig"
-   FLASK_RUN_HOST="0.0.0.0"
-   FLASK_RUN_PORT="3000"
+```shell
+flask tests_unit
+```
 
-   # Secret key
-   SECRET_KEY=<your-secret-key>
-   JWT_SECRET_KEY=<your-jwt-secret-key>
+7. **Run integration tests**
 
-   # Database service configuration
-   DATABASE_TEST_URL="postgresql://db_user:db_password@localhost/db_test"
-   ```
+```shell
+flask tests_integration
+```
 
-4. Init database:
-   Create Database
+8. **Run API tests**
 
-   ```shell
-   flask create-db
-   ```
+```shell
+flask tests_api
+```
 
-   Create User Admin
+9. **Run coverage**
 
-   ```shell
-   flask create-user-admin
-   ```
+```shell
+flask coverage
+```
 
-5. Run all the tests:
+10. **Run coverage report**
 
-   ```shell
-   flask tests
-   ```
-
-6. Run unit tests:
-
-   ```shell
-   flask tests_unit
-   ```
-
-7. Run integration tests:
-
-   ```shell
-   flask tests_integration
-   ```
-
-8. Run API tests:
-
-   ```shell
-   flask tests_api
-   ```
-
-9. Run coverage:
-
-   ```shell
-   flask coverage
-   ```
-
-10. Run coverage report:
-    ```shell
-    flask coverage_report
-    ```
+```shell
+flask coverage_report
+```
 
 ### Local
 
 Containerized services separately with PostgreSQL databases (db), API (api) and Nginx reverse proxy (nginx) with Docker and docker-compose.
 
-1. Create **.env.api.local**, **.env.db.local** files and enter environment variables for
-   each service. In the local environment there are 3 services (api, db, nginx). For example:
+1. **Create `.env.api.local`, `.env.db.local` files**
 
-   1. **.env.api.local**:
+   1. **.env.api.local**
 
       ```shell
       # APP configuration
@@ -307,20 +238,18 @@ Containerized services separately with PostgreSQL databases (db), API (api) and 
 
       ```shell
       POSTGRES_USER=<name_user> # For example db_user
-
       POSTGRES_PASSWORD=<password> # For example db_password
-
       POSTGRES_DB=<name_DB> # For example db_dev
       ```
 
-2. Run: 1. Build and run services:
+2. **Build and run services**
    `shell docker-compose up --build ` 2. Stop services:
    `shell docker-compose stop ` 3. Delete services:
    `shell docker compose down ` 4. Remove services (removing volumes):
    `shell docker-compose down -v ` 4. Remove services (removing volumes and images):
    `shell docker-compose down -v --rmi all ` 5. View services:
    `shell docker-compose ps `
-   **NOTE:** The Rest API defaults to host _localhost_ and port _8080_.
+   **NOTE:** The Rest API defaults to host _localhost_ and port _80_.
 
 ### Production
 
@@ -357,7 +286,7 @@ Apply CI/CD with Github Actions to automatically deployed to AWS platform use EC
 
 - Create all tables in the database:
 
-  ```
+  ```sh
   flask create_db
   ```
 
