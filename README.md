@@ -328,49 +328,28 @@ Apply CI/CD with Github Actions to automatically deployed to AWS platform use EC
 
 1. Create file **.env.pro** and enter the environment variables needed for production. For example:
 
-   1. **.env.pro**:
+   ```shell
+   # APP configuration
+   APP_NAME=Flask API Rest Template
+   APP_ENV=production
 
-      ```shell
-      # APP configuration
-      APP_NAME=Flask API Rest Template
-      APP_ENV=production
+   # Flask configuration
+   API_ENTRYPOINT=app:app
+   APP_SETTINGS_MODULE=config.ProductionConfig
 
-      # Flask configuration
-      API_ENTRYPOINT=app:app
-      APP_SETTINGS_MODULE=config.ProductionConfig
+   # API service configuration
+   API_HOST=<api_host> # For example 0.0.0.0
 
-      # API service configuration
-      API_HOST=<api_host> # For example 0.0.0.0
+   # Secret key
+   SECRET_KEY=<your-secret-key>
+   JWT_SECRET_KEY=<your-jwt-secret-key>
 
-      # Secret key
-      SECRET_KEY=<your-secret-key>
-      JWT_SECRET_KEY=<your-jwt-secret-key>
+   # Database service configuration
+   DATABASE_URL=<url_database> # For example sqlite:///production.db
 
-      # Database service configuration
-      DATABASE_URL=<url_database> # For example sqlite:///production.db
-
-      # Deploy platform
-      PLATFORM_DEPLOY=AWS
-      ```
-
-2. Create _Secrets_ on Github:
-
-   1. **AWS_ACCESS_KEY_ID**: access token
-   2. **AWS_SECRET_ACCESS_KEY**: secret access
-   3. **SSH_PRIVATE_KEY**: ssh key pair
-   4. **DOCKERHUB_USERNAME**: ssh key pair
-   5. **DOCKERHUB_PASSWORD**: ssh key pair
-
-3. Create _Variables_ on Github:
-
-   1. **TAGS**: Tag for resources
-
-      Example:
-
-      ```
-      [{ "Key": "ApplicationName", "Value": "Template_Application" },
-      { "Key": "Creator", "Value": "VectorNguyen" }]
-      ```
+   # Deploy platform
+   PLATFORM_DEPLOY=AWS
+   ```
 
 ## Flask Commands
 

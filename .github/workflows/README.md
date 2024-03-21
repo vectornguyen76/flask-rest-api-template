@@ -1,5 +1,26 @@
 # CI/CD Deploy
 
+## Set up Github Actions
+
+1. Create _Secrets_ on Github:
+
+   - **AWS_ACCESS_KEY_ID**: access token
+   - **AWS_SECRET_ACCESS_KEY**: secret access
+   - **SSH_PRIVATE_KEY**: ssh key pair
+   - **DOCKERHUB_USERNAME**: dockerhub username
+   - **DOCKERHUB_PASSWORD**: dockerhub password
+
+2. Create _Variables_ on Github:
+
+   - **TAGS**: Tag for resources
+
+     Example:
+
+     ```sh
+     [{ "Key": "ApplicationName", "Value": "Template_Application" },
+     { "Key": "Creator", "Value": "VectorNguyen" }]
+     ```
+
 ## Workflows
 
 ### Development - Build and Unittest
