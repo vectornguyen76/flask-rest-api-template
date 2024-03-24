@@ -4,6 +4,10 @@
 [![Staging](https://github.com/vectornguyen76/flask-rest-api-template/actions/workflows/staging_pipeline.yml/badge.svg)](https://github.com/vectornguyen76/flask-rest-api-template/actions/workflows/staging_pipeline.yml)
 [![Production](https://github.com/vectornguyen76/flask-rest-api-template/actions/workflows/production_pipeline.yml/badge.svg)](https://github.com/vectornguyen76/flask-rest-api-template/actions/workflows/production_pipeline.yml)
 
+<p align="center">
+<img src="./assets/logo.png" alt="Logo" />
+</p>
+
 Rest API template developed in Python with the Flask framework. The template covers user management, jwt tokens for authentication, and assign permissions for each user with Flask Principal. In the local environment, it uses docker to create an environment made up of several services such as api (flask), database (postgresql), reverse-proxy (nginx).
 
 ## Index
@@ -351,6 +355,10 @@ Apply CI/CD with Github Actions to automatically deployed to AWS platform use EC
 ```
 http://localhost:<port>/swagger-ui
 ```
+
+<p align="center">
+<img src="./assets/swagger.png" alt="Swagger" />
+</p>
 
 ## Reference
 
